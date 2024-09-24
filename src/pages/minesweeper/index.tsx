@@ -1,7 +1,9 @@
+import Container from "../../common/container";
+
 export default function MinesweeperPage() {
   return (
-    <>
-      <div>지뢰찾기</div>
-    </>
+    <Container>
+      <span>지뢰찾기</span>
+    </Container>
   );
 }
