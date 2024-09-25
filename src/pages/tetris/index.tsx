@@ -1,4 +1,4 @@
-import Container from "../../common/container";
+import Container from "../../common/components/container";
 
 export default function TetrisPage() {
   return (
