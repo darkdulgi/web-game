@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MouseEvent, SetStateAction } from "react";
+import { MINE_BOX, MOUSE_LEFT, MOUSE_RIGHT } from "../../common/constants";
 
 interface BoxType {
   row: number;
@@ -54,8 +55,22 @@ export default function MineBox({
     setPlayerField(newPlayerField);
   }
 
-  function onClickBox() {
-    if (hereValue !== -1) return;
+  function handleMouseDown(e: MouseEvent<HTMLElement>) {
+    if (e.button === MOUSE_RIGHT) {
+      // 마우스 오른쪽 버튼을 누를 때 그 칸에 깃발을 세웁니다.
+      if (hereValue !== MINE_BOX.CLOSED && hereValue !== MINE_BOX.FLAG) return;
+
+      const newPlayerField = playerField.map((list) => [...list]);
+      if (hereValue === MINE_BOX.CLOSED) newPlayerField[rowIdx][colIdx] = -3;
+      else if (hereValue === MINE_BOX.FLAG) newPlayerField[rowIdx][colIdx] = -1;
+
+      setPlayerField(newPlayerField);
+    }
+  }
+
+  function handleMouseUp(e: MouseEvent<HTMLElement>) {
+    if (hereValue !== MINE_BOX.CLOSED || e.button !== MOUSE_LEFT) return;
+
     if (mineField[rowIdx][colIdx]) {
       // 게임오버
       console.log("game over");
@@ -65,12 +80,26 @@ export default function MineBox({
     BFS();
   }
 
+  function numberToImgSrc() {
+    let path = "/minesweeper/";
+    if (hereValue >= 0) path += `type${hereValue}.svg`;
+    else if (hereValue === MINE_BOX.CLOSED) path += "closed.svg";
+    else if (hereValue === MINE_BOX.WAIT) path += "type0.svg";
+    else if (hereValue === MINE_BOX.FLAG) path += "flag.svg";
+    else if (hereValue === MINE_BOX.MINE) path += "mine.svg";
+    else if (hereValue === MINE_BOX.MINE_RED) path += "mine_red.svg";
+
+    return path;
+  }
+
   return (
     <div
-      onClick={onClickBox}
-      className={`flex justify-center items-center w-10 h-10 border border-black ${hereValue < 0 ? "bg-gray-300" : "bg-slate-50"}`}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onContextMenu={(e) => e.preventDefault()}
+      className={`flex justify-center w-10 h-10 items-center`}
     >
-      {hereValue > 0 && hereValue}
+      <img src={numberToImgSrc()} alt="칸" draggable={false} />
     </div>
   );
 }
