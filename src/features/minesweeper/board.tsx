@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import difficultyList from "./difficulty";
 import shuffleList from "../../common/utils/shuffleList";
 import MineBox from "./minebox";
 
-export default function Board({ currentDifficulty }: { currentDifficulty: number }) {
+export default function Board({
+  currentDifficulty,
+  isGameOver,
+  setIsGameOver,
+}: {
+  currentDifficulty: number;
+  isGameOver: boolean;
+  setIsGameOver: Dispatch<SetStateAction<boolean>>;
+}) {
   const [mineField, setMineField] = useState<boolean[][]>([]);
   const [playerField, setPlayerField] = useState<number[][]>([]);
   const { row, column, mine } = difficultyList[currentDifficulty];
 
   useEffect(() => {
+    if (isGameOver) return;
     // 1차원 배열을 만들어 지뢰를 넣고 셔플한 후, 2차원 배열에 할당합니다.
     const flatMineField: boolean[] = Array<boolean>(row * column)
       .fill(false)
@@ -28,7 +37,7 @@ export default function Board({ currentDifficulty }: { currentDifficulty: number
         .fill(-1)
         .map(() => Array<number>(column).fill(-1)),
     );
-  }, [currentDifficulty]);
+  }, [currentDifficulty, isGameOver]);
 
   return (
     <div>
@@ -44,6 +53,8 @@ export default function Board({ currentDifficulty }: { currentDifficulty: number
               mineField={mineField}
               playerField={playerField}
               setPlayerField={setPlayerField}
+              isGameOver={isGameOver}
+              setIsGameOver={setIsGameOver}
             />
           ))}
         </div>

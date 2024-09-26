@@ -9,6 +9,8 @@ interface BoxType {
   mineField: boolean[][];
   playerField: number[][];
   setPlayerField: Dispatch<SetStateAction<number[][]>>;
+  isGameOver: boolean;
+  setIsGameOver: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function MineBox({
@@ -19,6 +21,8 @@ export default function MineBox({
   mineField,
   playerField,
   setPlayerField,
+  isGameOver,
+  setIsGameOver,
 }: BoxType) {
   const hereValue = playerField[rowIdx][colIdx];
 
@@ -55,6 +59,17 @@ export default function MineBox({
     setPlayerField(newPlayerField);
   }
 
+  function showAllMine() {
+    const newPlayerField = playerField.map((list) => [...list]);
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < column; j++) {
+        if (mineField[i][j]) newPlayerField[i][j] = MINE_BOX.MINE;
+      }
+    }
+    newPlayerField[rowIdx][colIdx] = MINE_BOX.MINE_RED;
+    setPlayerField(newPlayerField);
+  }
+
   function handleMouseDown(e: MouseEvent<HTMLElement>) {
     if (e.button === MOUSE_RIGHT) {
       // 마우스 오른쪽 버튼을 누를 때 그 칸에 깃발을 세웁니다.
@@ -72,12 +87,11 @@ export default function MineBox({
     if (hereValue !== MINE_BOX.CLOSED || e.button !== MOUSE_LEFT) return;
 
     if (mineField[rowIdx][colIdx]) {
-      // 게임오버
-      console.log("game over");
-      return;
+      setIsGameOver(true);
+      showAllMine();
+    } else {
+      BFS();
     }
-
-    BFS();
   }
 
   function numberToImgSrc() {
@@ -93,13 +107,14 @@ export default function MineBox({
   }
 
   return (
-    <div
+    <button
+      disabled={isGameOver}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
       className={`flex justify-center w-10 h-10 items-center`}
     >
       <img src={numberToImgSrc()} alt="칸" draggable={false} />
-    </div>
+    </button>
   );
 }

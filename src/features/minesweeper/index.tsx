@@ -4,9 +4,14 @@ import difficultyList from "./difficulty";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
-  
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+
   function onChangeDifficulty(e: ChangeEvent<HTMLInputElement>) {
     setCurrentDifficulty(parseInt(e.target.value));
+  }
+
+  function retryGame() {
+    setIsGameOver(false);
   }
 
   return (
@@ -34,7 +39,18 @@ export default function Minesweeper() {
         </div>
       </form>
 
-      <Board currentDifficulty={currentDifficulty}/>
+      <Board
+        currentDifficulty={currentDifficulty}
+        isGameOver={isGameOver}
+        setIsGameOver={setIsGameOver}
+      />
+
+      <button
+        onClick={retryGame}
+        className={`${!isGameOver && "hidden"} bg-blue-500 text-white px-5 py-3`}
+      >
+        다시하기
+      </button>
     </div>
   );
 }
