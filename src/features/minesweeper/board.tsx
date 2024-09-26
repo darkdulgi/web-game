@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import difficultyList from "./difficulty";
 import shuffleList from "../../common/utils/shuffleList";
+import MineBox from "./minebox";
 
 export default function Board({ currentDifficulty }: { currentDifficulty: number }) {
   const [mineField, setMineField] = useState<boolean[][]>([]);
+  const [playerField, setPlayerField] = useState<number[][]>([]);
   const { row, column, mine } = difficultyList[currentDifficulty];
 
   useEffect(() => {
@@ -21,16 +23,28 @@ export default function Board({ currentDifficulty }: { currentDifficulty: number
     }
 
     setMineField(newMineField);
+    setPlayerField(
+      Array<number>(row)
+        .fill(-1)
+        .map(() => Array<number>(column).fill(-1)),
+    );
   }, [currentDifficulty]);
 
   return (
     <div>
-      {mineField.map((mineList, rowIdx) => (
+      {playerField.map((mineList, rowIdx) => (
         <div key={rowIdx} className="flex">
-          {mineList.map((box, colIdx) => (
-            <div key={colIdx} className="w-5 h-5 border border-black">
-              {box && "x"}
-            </div>
+          {mineList.map((_, colIdx) => (
+            <MineBox
+              key={colIdx}
+              row={row}
+              rowIdx={rowIdx}
+              column={column}
+              colIdx={colIdx}
+              mineField={mineField}
+              playerField={playerField}
+              setPlayerField={setPlayerField}
+            />
           ))}
         </div>
       ))}
