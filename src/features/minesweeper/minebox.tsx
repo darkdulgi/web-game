@@ -108,13 +108,12 @@ export default function MineBox({
 
   return (
     <button
+      style={{ backgroundImage: `url(${numberToImgSrc()})` }}
       disabled={isGameOver}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
-      className={`flex justify-center w-10 h-10 items-center`}
-    >
-      <img src={numberToImgSrc()} alt="칸" draggable={false} />
-    </button>
+      className={`flex justify-center w-10 h-10 items-center bg-cover`}
+    />
   );
 }
