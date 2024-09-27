@@ -1,13 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import Board from "./board";
 import difficultyList from "./difficulty";
-import usePreload from "../../common/hooks/usePreload";
-import getMinesweeperPreloadList from "./getPreloadList";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
-  usePreload(getMinesweeperPreloadList(), [currentDifficulty, isGameOver]);
 
   function onChangeDifficulty(e: ChangeEvent<HTMLInputElement>) {
     setCurrentDifficulty(parseInt(e.target.value));
