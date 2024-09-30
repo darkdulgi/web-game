@@ -1,11 +1,17 @@
+import { Helmet } from "react-helmet-async";
 import Container from "./common/components/container";
 import Main from "./features/main";
 
 function App() {
   return (
-    <Container>
-      <Main />
-    </Container>
+    <>
+      <Helmet>
+        <title>웹게임</title>
+      </Helmet>
+      <Container>
+        <Main />
+      </Container>
+    </>
   );
 }
 
