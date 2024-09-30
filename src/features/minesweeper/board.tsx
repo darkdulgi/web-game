@@ -2,15 +2,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import difficultyList from "./difficulty";
 import shuffleList from "../../common/utils/shuffleList";
 import MineBox from "./minebox";
+import { GAME_CLEAR, MINE_BOX, ON_GOING } from "../../common/constants";
 
 export default function Board({
   currentDifficulty,
-  isGameOver,
-  setIsGameOver,
+  gameState,
+  setGameState,
 }: {
   currentDifficulty: number;
-  isGameOver: boolean;
-  setIsGameOver: Dispatch<SetStateAction<boolean>>;
+  gameState: number;
+  setGameState: Dispatch<SetStateAction<number>>;
 }) {
   const [mineField, setMineField] = useState<boolean[][]>([]);
   const [playerField, setPlayerField] = useState<number[][]>([]);
@@ -38,16 +39,48 @@ export default function Board({
     );
   }
 
+  function showAllMine(x?: number, y?: number) {
+    const newPlayerField = playerField.map((list) => [...list]);
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < column; j++) {
+        if (mineField[i][j]) newPlayerField[i][j] = MINE_BOX.MINE;
+      }
+    }
+    if (x !== undefined && y !== undefined) {
+      newPlayerField[x][y] = MINE_BOX.MINE_RED;
+    }
+    setPlayerField(newPlayerField);
+  }
+
+  function checkWin() {
+    if (!mineField.length || !playerField.length) return;
+    let isWin = true;
+    for (let i = 0; i < row; i++) {
+      for (let j = 0; j < column; j++) {
+        if (!mineField[i][j] && playerField[i][j] < 0) isWin = false;
+      }
+    }
+    if (isWin) {
+      setGameState(GAME_CLEAR);
+    }
+  }
+
   useEffect(() => {
     initialize();
-    setIsGameOver(false);
+    setGameState(ON_GOING);
   }, [currentDifficulty]);
 
   useEffect(() => {
-    if (!isGameOver) {
+    if (gameState === ON_GOING) {
       initialize();
+    } else if (gameState === GAME_CLEAR) {
+      showAllMine();
     }
-  }, [isGameOver]);
+  }, [gameState]);
+
+  useEffect(() => {
+    checkWin();
+  }, [playerField]);
 
   return (
     <div>
@@ -63,8 +96,9 @@ export default function Board({
               mineField={mineField}
               playerField={playerField}
               setPlayerField={setPlayerField}
-              isGameOver={isGameOver}
-              setIsGameOver={setIsGameOver}
+              gameState={gameState}
+              setGameState={setGameState}
+              showAllMine={showAllMine}
             />
           ))}
         </div>

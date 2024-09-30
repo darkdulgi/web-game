@@ -1,17 +1,14 @@
 import { ChangeEvent, useState } from "react";
 import Board from "./board";
 import difficultyList from "./difficulty";
+import { GAME_CLEAR, ON_GOING } from "../../common/constants";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const [gameState, setGameState] = useState<number>(ON_GOING);
 
   function onChangeDifficulty(e: ChangeEvent<HTMLInputElement>) {
     setCurrentDifficulty(parseInt(e.target.value));
-  }
-
-  function retryGame() {
-    setIsGameOver(false);
   }
 
   return (
@@ -41,16 +38,20 @@ export default function Minesweeper() {
 
       <Board
         currentDifficulty={currentDifficulty}
-        isGameOver={isGameOver}
-        setIsGameOver={setIsGameOver}
+        gameState={gameState}
+        setGameState={setGameState}
       />
 
       <button
-        onClick={retryGame}
-        className={`${!isGameOver && "hidden"} bg-blue-500 text-white px-5 py-3`}
+        onClick={() => setGameState(ON_GOING)}
+        className={`${gameState === ON_GOING && "hidden"} bg-blue-500 text-white px-5 py-3`}
       >
         다시하기
       </button>
+
+      <span className={`${gameState !== GAME_CLEAR && "hidden"} text-red-500`}>
+        게임 클리어!
+      </span>
     </div>
   );
 }

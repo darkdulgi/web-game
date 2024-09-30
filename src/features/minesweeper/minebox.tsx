@@ -1,5 +1,5 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-import { MINE_BOX, MOUSE_LEFT, MOUSE_RIGHT } from "../../common/constants";
+import { GAME_OVER, MINE_BOX, MOUSE_LEFT, MOUSE_RIGHT, ON_GOING } from "../../common/constants";
 
 interface BoxType {
   row: number;
@@ -9,8 +9,9 @@ interface BoxType {
   mineField: boolean[][];
   playerField: number[][];
   setPlayerField: Dispatch<SetStateAction<number[][]>>;
-  isGameOver: boolean;
-  setIsGameOver: Dispatch<SetStateAction<boolean>>;
+  gameState: number;
+  setGameState: Dispatch<SetStateAction<number>>;
+  showAllMine: (x?: number, y?: number) => void;
 }
 
 export default function MineBox({
@@ -21,8 +22,9 @@ export default function MineBox({
   mineField,
   playerField,
   setPlayerField,
-  isGameOver,
-  setIsGameOver,
+  gameState,
+  setGameState,
+  showAllMine,
 }: BoxType) {
   const hereValue = playerField[rowIdx][colIdx];
 
@@ -59,17 +61,6 @@ export default function MineBox({
     setPlayerField(newPlayerField);
   }
 
-  function showAllMine() {
-    const newPlayerField = playerField.map((list) => [...list]);
-    for (let i = 0; i < row; i++) {
-      for (let j = 0; j < column; j++) {
-        if (mineField[i][j]) newPlayerField[i][j] = MINE_BOX.MINE;
-      }
-    }
-    newPlayerField[rowIdx][colIdx] = MINE_BOX.MINE_RED;
-    setPlayerField(newPlayerField);
-  }
-
   function handleMouseDown(e: MouseEvent<HTMLElement>) {
     if (e.button === MOUSE_RIGHT) {
       // 마우스 오른쪽 버튼을 누를 때 그 칸에 깃발을 세웁니다.
@@ -87,9 +78,11 @@ export default function MineBox({
     if (hereValue !== MINE_BOX.CLOSED || e.button !== MOUSE_LEFT) return;
 
     if (mineField[rowIdx][colIdx]) {
-      setIsGameOver(true);
-      showAllMine();
+      // 지뢰를 눌러 게임 오버가 됩니다.
+      setGameState(GAME_OVER);
+      showAllMine(rowIdx, colIdx);
     } else {
+      //지뢰를 누르지 않아 필드를 펼칩니다.
       BFS();
     }
   }
@@ -109,7 +102,7 @@ export default function MineBox({
   return (
     <button
       style={{ backgroundImage: `url(${numberToImgSrc()})` }}
-      disabled={isGameOver}
+      disabled={gameState !== ON_GOING}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
