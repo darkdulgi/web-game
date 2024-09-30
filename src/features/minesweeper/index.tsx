@@ -1,14 +1,17 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import Board from "./board";
 import difficultyList from "./difficulty";
-import { GAME_CLEAR, ON_GOING } from "../../common/constants";
+import { GAME_CLEAR, GAME_OVER, ON_GOING } from "../../common/constants";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
+  const [retryNum, setRetryNum] = useState<number>(0);
   const [gameState, setGameState] = useState<number>(ON_GOING);
 
-  function onChangeDifficulty(e: ChangeEvent<HTMLInputElement>) {
-    setCurrentDifficulty(parseInt(e.target.value));
+  function getResultMessage() {
+    if (gameState === GAME_CLEAR) return "모든 지뢰를 찾았습니다!";
+    if (gameState === GAME_OVER) return "지뢰가 터졌습니다!";
+    return "z";
   }
 
   return (
@@ -25,7 +28,7 @@ export default function Minesweeper() {
               <input
                 type="radio"
                 value={index}
-                onChange={onChangeDifficulty}
+                onChange={(e) => setCurrentDifficulty(parseInt(e.target.value))}
                 checked={currentDifficulty === index}
                 className="hidden"
               />
@@ -36,22 +39,25 @@ export default function Minesweeper() {
         </div>
       </form>
 
-      <Board
-        currentDifficulty={currentDifficulty}
-        gameState={gameState}
-        setGameState={setGameState}
-      />
+      <div className="flex flex-col p-6 border-8 retro-button shadow">
+        <span className={`${gameState === ON_GOING && "invisible"} text-red-600`}>
+          {getResultMessage()}
+        </span>
 
-      <button
-        onClick={() => setGameState(ON_GOING)}
-        className={`${gameState === ON_GOING && "hidden"} bg-blue-500 text-white px-5 py-3`}
-      >
-        다시하기
-      </button>
+        <Board
+          currentDifficulty={currentDifficulty}
+          gameState={gameState}
+          setGameState={setGameState}
+          retryNum={retryNum}
+        />
 
-      <span className={`${gameState !== GAME_CLEAR && "hidden"} text-red-500`}>
-        게임 클리어!
-      </span>
+        <button
+          onClick={() => setRetryNum((x) => x + 1)}
+          className={`mt-4 border-4 retro-button retro-button-active py-2 `}
+        >
+          다시하기
+        </button>
+      </div>
     </div>
   );
 }

@@ -8,10 +8,12 @@ export default function Board({
   currentDifficulty,
   gameState,
   setGameState,
+  retryNum,
 }: {
   currentDifficulty: number;
   gameState: number;
   setGameState: Dispatch<SetStateAction<number>>;
+  retryNum: number;
 }) {
   const [mineField, setMineField] = useState<boolean[][]>([]);
   const [playerField, setPlayerField] = useState<number[][]>([]);
@@ -68,12 +70,10 @@ export default function Board({
   useEffect(() => {
     initialize();
     setGameState(ON_GOING);
-  }, [currentDifficulty]);
+  }, [currentDifficulty, retryNum]);
 
   useEffect(() => {
-    if (gameState === ON_GOING) {
-      initialize();
-    } else if (gameState === GAME_CLEAR) {
+    if (gameState === GAME_CLEAR) {
       showAllMine();
     }
   }, [gameState]);
@@ -83,7 +83,7 @@ export default function Board({
   }, [playerField]);
 
   return (
-    <div>
+    <div className="border-8 border-t-neutral-500 border-l-neutral-500 border-r-white border-b-white">
       {playerField.map((mineList, rowIdx) => (
         <div key={rowIdx} className="flex">
           {mineList.map((_, colIdx) => (
