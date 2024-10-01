@@ -5,6 +5,7 @@ export default {
     extend: {},
     fontFamily: {
       ramche: ["ramche"],
+      "digital-mono": ["digital-mono"],
     },
   },
   plugins: [],

@@ -31,9 +31,7 @@ export default function Minesweeper() {
           ))}
         </div>
 
-        <div className="flex w-full justify-between items-center">
-          <div></div>
-
+        <div className="flex w-full justify-between items-center py-3">
           <span
             className={`${gameState === GAME_OVER ? "text-red-600" : gameState === GAME_CLEAR ? "text-blue-700" : "invisible"}`}
           >
