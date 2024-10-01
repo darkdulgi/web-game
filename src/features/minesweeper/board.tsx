@@ -2,18 +2,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import difficultyList from "./difficulty";
 import shuffleList from "../../common/utils/shuffleList";
 import MineBox from "./minebox";
-import { GAME_CLEAR, MINE_BOX, ON_GOING } from "../../common/constants";
+import { GAME_CLEAR, MINE_BOX, NOT_START } from "../../common/constants";
 
 export default function Board({
   currentDifficulty,
   gameState,
   setGameState,
-  retryNum,
 }: {
   currentDifficulty: number;
   gameState: number;
   setGameState: Dispatch<SetStateAction<number>>;
-  retryNum: number;
 }) {
   const [mineField, setMineField] = useState<boolean[][]>([]);
   const [playerField, setPlayerField] = useState<number[][]>([]);
@@ -69,12 +67,14 @@ export default function Board({
 
   useEffect(() => {
     initialize();
-    setGameState(ON_GOING);
-  }, [currentDifficulty, retryNum]);
+    setGameState(NOT_START);
+  }, [currentDifficulty]);
 
   useEffect(() => {
     if (gameState === GAME_CLEAR) {
       showAllMine();
+    } else if (gameState === NOT_START) {
+      initialize();
     }
   }, [gameState]);
 

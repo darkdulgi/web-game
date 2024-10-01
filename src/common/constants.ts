@@ -7,13 +7,13 @@ export const MINE_BOX = {
   MINE_RED: -98,
 };
 
-// 게임의 진행 중, 게임 오버, 승리를 나타내는 상태입니다.
-export const ON_GOING = 0;
-export const GAME_OVER = 1;
-export const GAME_CLEAR = 2;
+// 게임의 현재 상태입니다.
+export const NOT_START = 0;
+export const ON_GOING = 1;
+export const GAME_OVER = 2;
+export const GAME_CLEAR = 3;
 
 // 마우스 이벤트 핸들링 시 전달되는 Event 인수의 Event.button 관련 상수입니다.
 export const MOUSE_LEFT = 0;
 export const MOUSE_CENTER = 1;
 export const MOUSE_RIGHT = 2;
-

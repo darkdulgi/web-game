@@ -1,12 +1,11 @@
 import { useState } from "react";
 import Board from "./board";
 import difficultyList from "./difficulty";
-import { GAME_CLEAR, GAME_OVER, ON_GOING } from "../../common/constants";
+import { GAME_CLEAR, GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Timer from "./timer";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
-  const [retryNum, setRetryNum] = useState<number>(0);
   const [gameState, setGameState] = useState<number>(ON_GOING);
 
   function getResultMessage() {
@@ -36,7 +35,7 @@ export default function Minesweeper() {
           <div></div>
 
           <span
-            className={`${gameState === ON_GOING ? "invisible" : gameState === GAME_OVER ? "text-red-600" : "text-blue-700"}`}
+            className={`${gameState === GAME_OVER ? "text-red-600" : gameState === GAME_CLEAR ? "text-blue-700" : "invisible"}`}
           >
             {getResultMessage()}
           </span>
@@ -48,11 +47,10 @@ export default function Minesweeper() {
           currentDifficulty={currentDifficulty}
           gameState={gameState}
           setGameState={setGameState}
-          retryNum={retryNum}
         />
 
         <button
-          onClick={() => setRetryNum((x) => x + 1)}
+          onClick={() => setGameState(NOT_START)}
           className={`mt-4 border-4 retro-button retro-button-active py-2 w-full`}
         >
           다시하기

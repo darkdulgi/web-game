@@ -1,5 +1,13 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-import { GAME_OVER, MINE_BOX, MOUSE_LEFT, MOUSE_RIGHT, ON_GOING } from "../../common/constants";
+import {
+  GAME_CLEAR,
+  GAME_OVER,
+  MINE_BOX,
+  MOUSE_LEFT,
+  MOUSE_RIGHT,
+  NOT_START,
+  ON_GOING,
+} from "../../common/constants";
 
 interface BoxType {
   row: number;
@@ -83,6 +91,9 @@ export default function MineBox({
       showAllMine(rowIdx, colIdx);
     } else {
       //지뢰를 누르지 않아 필드를 펼칩니다.
+      if (gameState === NOT_START) {
+        setGameState(ON_GOING);
+      }
       BFS();
     }
   }
@@ -102,7 +113,7 @@ export default function MineBox({
   return (
     <button
       style={{ backgroundImage: `url(${numberToImgSrc()})` }}
-      disabled={gameState !== ON_GOING}
+      disabled={gameState === GAME_OVER || gameState === GAME_CLEAR}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
