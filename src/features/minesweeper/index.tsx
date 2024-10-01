@@ -3,6 +3,7 @@ import Board from "./board";
 import difficultyList from "./difficulty";
 import { GAME_CLEAR, GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Timer from "./timer";
+import firework from "../../common/firework.module.css";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
@@ -15,45 +16,52 @@ export default function Minesweeper() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center p-6 border-8 retro-button shadow">
-        <span className="text-4xl font-bold text-neutral-800">Minesweeper</span>
-
-        <div className="pt-6 flex gap-2">
-          {difficultyList.map((diff, index) => (
-            <button
-              key={diff.name}
-              onClick={() => setCurrentDifficulty(index)}
-              className={`py-1 w-20 border-4 ${currentDifficulty === index ? "bg-neutral-400 retro-button-reverse" : "retro-button retro-button-active"}`}
-            >
-              {diff.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="flex w-full justify-between items-center py-3">
-          <span
-            className={`${gameState === GAME_OVER ? "text-red-600" : gameState === GAME_CLEAR ? "text-blue-700" : "invisible"}`}
-          >
-            {getResultMessage()}
-          </span>
-
-          <Timer gameState={gameState} />
-        </div>
-
-        <Board
-          currentDifficulty={currentDifficulty}
-          gameState={gameState}
-          setGameState={setGameState}
-        />
-
-        <button
-          onClick={() => setGameState(NOT_START)}
-          className={`mt-4 border-4 retro-button retro-button-active py-2 w-full`}
-        >
-          다시하기
-        </button>
+    <>
+      <div className={`${gameState === GAME_CLEAR && firework.pyro}`}>
+        <div className={firework.before}></div>
+        <div className={firework.after}></div>
       </div>
-    </div>
+
+      <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center p-6 border-8 retro-button shadow">
+          <span className="text-4xl font-bold text-neutral-800">Minesweeper</span>
+
+          <div className="pt-6 flex gap-2">
+            {difficultyList.map((diff, index) => (
+              <button
+                key={diff.name}
+                onClick={() => setCurrentDifficulty(index)}
+                className={`py-1 w-20 border-4 ${currentDifficulty === index ? "bg-neutral-400 retro-button-reverse" : "retro-button retro-button-active"}`}
+              >
+                {diff.name}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex w-full justify-between items-center py-3">
+            <span
+              className={`${gameState === GAME_OVER ? "text-red-600" : gameState === GAME_CLEAR ? "text-blue-700" : "invisible"}`}
+            >
+              {getResultMessage()}
+            </span>
+
+            <Timer gameState={gameState} />
+          </div>
+
+          <Board
+            currentDifficulty={currentDifficulty}
+            gameState={gameState}
+            setGameState={setGameState}
+          />
+
+          <button
+            onClick={() => setGameState(NOT_START)}
+            className={`mt-4 border-4 retro-button retro-button-active py-2 w-full`}
+          >
+            다시하기
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
