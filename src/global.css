@@ -22,6 +22,10 @@
     @apply bg-neutral-300 border-t-white border-l-white border-b-neutral-500 border-r-neutral-500;
   }
 
+  .retro-button-reverse {
+    @apply border-t-neutral-500 border-l-neutral-500 border-r-white border-b-white;
+  }
+
   .retro-button-active {
     @apply active:border-t-neutral-500 active:border-l-neutral-500 active:border-r-white active:border-b-white;
   }

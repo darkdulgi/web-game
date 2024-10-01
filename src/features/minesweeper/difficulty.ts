@@ -7,19 +7,19 @@ interface DifficultyType {
 
 const difficultyList: DifficultyType[] = [
   {
-    name: "초급",
+    name: "쉬움",
     row: 9,
     column: 9,
     mine: 10,
   },
   {
-    name: "중급",
+    name: "중간",
     row: 16,
     column: 16,
     mine: 40,
   },
   {
-    name: "고급",
+    name: "어려움",
     row: 16,
     column: 30,
     mine: 99,

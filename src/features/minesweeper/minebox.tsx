@@ -106,7 +106,7 @@ export default function MineBox({
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onContextMenu={(e) => e.preventDefault()}
-      className={`flex justify-center w-10 h-10 items-center bg-cover`}
+      className={`flex justify-center w-8 h-8 items-center bg-cover`}
     />
   );
 }
