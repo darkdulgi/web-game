@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
 import {
   GAME_CLEAR,
   GAME_OVER,
@@ -8,6 +8,7 @@ import {
   NOT_START,
   ON_GOING,
 } from "../../common/constants";
+import useMouseStore from "../../common/store/mouseStore";
 
 interface BoxType {
   row: number;
@@ -35,6 +36,8 @@ export default function MineBox({
   showAllMine,
 }: BoxType) {
   const hereValue = playerField[rowIdx][colIdx];
+  const mouseState = useMouseStore((state) => state.mouseState);
+  const [isMouseEnter, setIsMouseEnter] = useState<boolean>(false);
 
   function BFS() {
     const queue = [[rowIdx, colIdx]];
@@ -100,12 +103,22 @@ export default function MineBox({
 
   function numberToImgSrc() {
     let path = "/minesweeper/";
-    if (hereValue >= 0) path += `type${hereValue}.svg`;
-    else if (hereValue === MINE_BOX.CLOSED) path += "closed.svg";
-    else if (hereValue === MINE_BOX.WAIT) path += "type0.svg";
-    else if (hereValue === MINE_BOX.FLAG) path += "flag.svg";
-    else if (hereValue === MINE_BOX.MINE) path += "mine.svg";
-    else if (hereValue === MINE_BOX.MINE_RED) path += "mine_red.svg";
+
+    if (hereValue >= 0) {
+      path += `type${hereValue}.svg`;
+    } else if (hereValue === MINE_BOX.CLOSED) {
+      if (mouseState && isMouseEnter) {
+        path += "type0.svg";
+      } else {
+        path += "closed.svg";
+      }
+    } else if (hereValue === MINE_BOX.FLAG) {
+      path += "flag.svg";
+    } else if (hereValue === MINE_BOX.MINE) {
+      path += "mine.svg";
+    } else if (hereValue === MINE_BOX.MINE_RED) {
+      path += "mine_red.svg";
+    }
 
     return path;
   }
@@ -116,6 +129,8 @@ export default function MineBox({
       disabled={gameState === GAME_OVER || gameState === GAME_CLEAR}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onMouseEnter={() => setIsMouseEnter(true)}
+      onMouseLeave={() => setIsMouseEnter(false)}
       onContextMenu={(e) => e.preventDefault()}
       className={`flex justify-center w-8 h-8 items-center bg-cover`}
     />

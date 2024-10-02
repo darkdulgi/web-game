@@ -24,7 +24,7 @@ export default function Timer({ gameState }: { gameState: number }) {
   }, [gameState]);
 
   return (
-    <div className="border-4 w-20 pr-1 text-right text-2xl font-digital-mono bg-black text-red-600 retro-button-reverse">
+    <div className="border-4 w-20 pr-1 text-right text-2xl font-digital-mono bg-black text-red-500 retro-button-reverse">
       {timerValue}
     </div>
   );
