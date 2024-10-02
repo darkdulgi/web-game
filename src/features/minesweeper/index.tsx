@@ -3,7 +3,6 @@ import Board from "./board";
 import difficultyList from "./difficulty";
 import { GAME_CLEAR, GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Timer from "./timer";
-import firework from "../../common/firework.module.css";
 
 export default function Minesweeper() {
   const [currentDifficulty, setCurrentDifficulty] = useState<number>(0);
@@ -17,11 +16,6 @@ export default function Minesweeper() {
 
   return (
     <>
-      <div className={`${gameState === GAME_CLEAR && firework.pyro}`}>
-        <div className={firework.before}></div>
-        <div className={firework.after}></div>
-      </div>
-
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center p-6 border-8 retro-button shadow">
           <span className="text-4xl font-bold text-neutral-800">Minesweeper</span>
