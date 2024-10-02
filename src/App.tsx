@@ -1,18 +1,25 @@
-import { Helmet } from "react-helmet-async";
-import Container from "./common/components/container";
-import Main from "./features/main";
+import { useEffect } from "react";
+import useMouseStore from "./common/store/mouseStore";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import router from "./router";
 
-function App() {
-  return (
-    <>
-      <Helmet>
-        <title>웹게임</title>
-      </Helmet>
-      <Container>
-        <Main />
-      </Container>
-    </>
-  );
+export default function App() {
+  const setMouseState = useMouseStore((state) => state.setMouseState);
+
+  useEffect(() => {
+    function handleMouseDown() {
+      setMouseState(true);
+    }
+    function handleMouseUp() {
+      setMouseState(false);
+    }
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  return <RouterProvider router={createBrowserRouter(router)} />;
 }
-
-export default App;

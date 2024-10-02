@@ -1,11 +1,11 @@
-import App from "./App";
+import MainPage from "./pages";
 import MinesweeperPage from "./pages/minesweeper";
 import TetrisPage from "./pages/tetris";
 
 const router = [
   {
     path: "/",
-    element: <App />,
+    element: <MainPage />,
   },
   {
     path: "minesweeper",
