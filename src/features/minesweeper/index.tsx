@@ -16,11 +16,11 @@ export default function Minesweeper() {
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div className="flex flex-col items-center p-6 border-8 retro-button shadow">
-          <span className="text-4xl font-bold text-neutral-800">Minesweeper</span>
+      <div className="flex items-center flex-col">
+        <div className="flex flex-col w-fit items-center p-4 sm:p-6 border-8 retro-button shadow">
+          <span className="sm:text-4xl text-3xl font-bold text-neutral-800">Minesweeper</span>
 
-          <div className="pt-6 flex gap-2">
+          <div className="pt-3 sm:pt-6 flex gap-2">
             {difficultyList.map((diff, index) => (
               <button
                 key={diff.name}

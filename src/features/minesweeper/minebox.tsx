@@ -1,4 +1,4 @@
-import { Dispatch, MouseEvent, SetStateAction, useState } from "react";
+import { Dispatch, MouseEvent, TouchEvent, SetStateAction, useRef, useState } from "react";
 import {
   GAME_CLEAR,
   GAME_OVER,
@@ -9,6 +9,7 @@ import {
   ON_GOING,
 } from "../../common/constants";
 import useMouseStore from "../../common/store/mouseStore";
+import vibrateMobile from "../../common/utils/vibrateMobile";
 
 interface BoxType {
   row: number;
@@ -38,6 +39,8 @@ export default function MineBox({
   const hereValue = playerField[rowIdx][colIdx];
   const mouseState = useMouseStore((state) => state.mouseState);
   const [isMouseEnter, setIsMouseEnter] = useState<boolean>(false);
+  const [isLongPress, setIsLongPress] = useState<boolean>(false);
+  const timerRef = useRef<number>(0);
 
   function BFS() {
     const queue = [[rowIdx, colIdx]];
@@ -72,32 +75,66 @@ export default function MineBox({
     setPlayerField(newPlayerField);
   }
 
-  function handleMouseDown(e: MouseEvent<HTMLElement>) {
-    if (e.button === MOUSE_RIGHT) {
-      // 마우스 오른쪽 버튼을 누를 때 그 칸에 깃발을 세웁니다.
-      if (hereValue !== MINE_BOX.CLOSED && hereValue !== MINE_BOX.FLAG) return;
+  function plantFlag() {
+    if (hereValue !== MINE_BOX.CLOSED && hereValue !== MINE_BOX.FLAG) return;
+    vibrateMobile(50);
+    const newPlayerField = playerField.map((list) => [...list]);
+    if (hereValue === MINE_BOX.CLOSED) newPlayerField[rowIdx][colIdx] = MINE_BOX.FLAG;
+    else if (hereValue === MINE_BOX.FLAG) newPlayerField[rowIdx][colIdx] = MINE_BOX.CLOSED;
 
-      const newPlayerField = playerField.map((list) => [...list]);
-      if (hereValue === MINE_BOX.CLOSED) newPlayerField[rowIdx][colIdx] = -3;
-      else if (hereValue === MINE_BOX.FLAG) newPlayerField[rowIdx][colIdx] = -1;
-
-      setPlayerField(newPlayerField);
-    }
+    setPlayerField(newPlayerField);
   }
 
-  function handleMouseUp(e: MouseEvent<HTMLElement>) {
-    if (hereValue !== MINE_BOX.CLOSED || e.button !== MOUSE_LEFT) return;
-
+  function selectBox() {
+    if (hereValue !== MINE_BOX.CLOSED) return;
     if (mineField[rowIdx][colIdx]) {
       // 지뢰를 눌러 게임 오버가 됩니다.
+      vibrateMobile(200);
       setGameState(GAME_OVER);
       showAllMine(rowIdx, colIdx);
     } else {
       //지뢰를 누르지 않아 필드를 펼칩니다.
+      vibrateMobile(50);
       if (gameState === NOT_START) {
         setGameState(ON_GOING);
       }
       BFS();
+    }
+  }
+
+  function handleMouseDown(e: MouseEvent<HTMLElement>) {
+    if (e.button === MOUSE_RIGHT) {
+      // 마우스 우클릭할 시 그 칸에 깃발을 세웁니다.
+      plantFlag();
+    }
+  }
+
+  function handleMouseUp(e: MouseEvent<HTMLElement>) {
+    // 마우스 좌클릭일 경우만 처리하고 모바일 터치로 중복 이벤트가 발생하는 것을 막습니다.
+    if (e.button !== MOUSE_LEFT || "ontouchstart" in window) return;
+
+    selectBox();
+  }
+
+  function handleTouchStart(e: TouchEvent<HTMLElement>) {
+    if ((e.target as HTMLButtonElement).disabled) return;
+
+    timerRef.current = setTimeout(() => {
+      plantFlag();
+      setIsLongPress(true);
+    }, 300);
+  }
+
+  function handleTouchEnd(e: TouchEvent<HTMLElement>) {
+    if ((e.target as HTMLButtonElement).disabled) return;
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      if (isLongPress) {
+        setIsLongPress(false);
+      } else {
+        selectBox();
+      }
     }
   }
 
@@ -132,6 +169,9 @@ export default function MineBox({
       onMouseEnter={() => setIsMouseEnter(true)}
       onMouseLeave={() => setIsMouseEnter(false)}
       onContextMenu={(e) => e.preventDefault()}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       className={`flex justify-center w-8 h-8 items-center bg-cover`}
     />
   );

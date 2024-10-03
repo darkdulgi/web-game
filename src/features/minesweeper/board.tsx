@@ -34,8 +34,8 @@ export default function Board({
     setMineField(newMineField);
     setPlayerField(
       Array<number>(row)
-        .fill(-1)
-        .map(() => Array<number>(column).fill(-1)),
+        .fill(MINE_BOX.CLOSED)
+        .map(() => Array<number>(column).fill(MINE_BOX.CLOSED)),
     );
   }
 
