@@ -77,6 +77,7 @@ export default function MineBox({
 
   function plantFlag() {
     if (hereValue !== MINE_BOX.CLOSED && hereValue !== MINE_BOX.FLAG) return;
+    setGameState(ON_GOING);
     vibrateMobile(50);
     const newPlayerField = playerField.map((list) => [...list]);
     if (hereValue === MINE_BOX.CLOSED) newPlayerField[rowIdx][colIdx] = MINE_BOX.FLAG;
@@ -103,8 +104,8 @@ export default function MineBox({
   }
 
   function handleMouseDown(e: MouseEvent<HTMLElement>) {
+    // 마우스 우클릭할 시 그 칸에 깃발을 세웁니다.
     if (e.button === MOUSE_RIGHT) {
-      // 마우스 우클릭할 시 그 칸에 깃발을 세웁니다.
       plantFlag();
     }
   }
