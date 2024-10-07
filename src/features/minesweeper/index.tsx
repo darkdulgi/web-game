@@ -16,7 +16,7 @@ export default function Minesweeper() {
 
   return (
     <>
-      <div className="flex items-center flex-col">
+      <section className="flex items-center flex-col">
         <div className="flex flex-col w-fit items-center p-4 sm:p-6 border-8 retro-button shadow">
           <span className="sm:text-4xl text-3xl font-bold text-neutral-800">Minesweeper</span>
 
@@ -55,7 +55,7 @@ export default function Minesweeper() {
             다시하기
           </button>
         </div>
-      </div>
+      </section>
     </>
   );
 }

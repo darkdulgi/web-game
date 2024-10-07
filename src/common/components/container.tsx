@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Sidebar from "./sideBar";
+import Sidebar from "./sidebar";
 import Topbar from "./topbar";
 
 export default function Container({ children }: { children: ReactNode }) {
