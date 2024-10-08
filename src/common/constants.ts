@@ -33,14 +33,16 @@ export const TETRIS_BOX = {
 };
 
 // 테트리스의 가로, 세로 길이입니다.
-export const TETRIS_ROW = 20;
+export const TETRIS_ROW = 24;
 export const TETRIS_COL = 10;
 
 // 테트리스에서 한번에 떨어질 수 있는 블록 뭉탱이의 분류입니다.
-export const LINEAR = 1;
-export const SQUARE = 2;
-export const LIMA_A = 3;
-export const LIMA_B = 4;
-export const MOUNTAIN = 5;
-export const SNAKE_A = 6;
-export const SNAKE_B = 7;
+export const TETRIS_SHAPE = {
+  LINEAR: 1,
+  SQUARE: 2,
+  LIMA_A: 3,
+  LIMA_B: 4,
+  MOUNTAIN: 5,
+  SNAKE_A: 6,
+  SNAKE_B: 7,
+};

@@ -4,16 +4,16 @@ import { TETRIS_BOX } from "../../common/constants";
 interface FieldType {
   field: number[][];
   setField: Dispatch<SetStateAction<number[][]>>;
-  fallingBlockShape: number;
+  fallingBlock: number;
 }
 
-export default function Field({ field, setField, fallingBlockShape }: FieldType) {
+export default function Field({ field, setField, fallingBlock }: FieldType) {
   if (!field) return;
 
-  function color(value: number) {
+  function color(value: number, row: number) {
     if (value === TETRIS_BOX.FALLING) {
-      value = fallingBlockShape;
-    }
+      value = fallingBlock;
+    } else if (row < 4) return "invisible";
 
     if (value === TETRIS_BOX.EMPTY) return "bg-neutral-300";
     if (value === TETRIS_BOX.YELLOW) return "bg-yellow-300";
@@ -31,7 +31,7 @@ export default function Field({ field, setField, fallingBlockShape }: FieldType)
       {field.map((row, x) => (
         <div key={x} className="flex">
           {row.map((box, y) => (
-            <div className={`h-8 w-8 ${color(box)} border`} key={y}></div>
+            <div className={`h-8 w-8 ${color(box, x)} border`} key={y}></div>
           ))}
         </div>
       ))}
