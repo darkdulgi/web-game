@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { NOT_START, ON_GOING, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../common/constants";
 import Field from "./field";
-import popAndPlaceBlockOnTop from "./popAndPlaceBlockOnTop";
-import dropPerSec from "./dropPerSec";
+import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
+import dropPerSec from "./functions/dropPerSec";
+import handleKeyDown from "./functions/handleKeyDown";
 
 interface GameType {
   score: number;
@@ -29,6 +30,16 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
     }
     setNextBlockList(newArr);
   }
+
+  useEffect(() => {
+    function _handleKeyDown(e: KeyboardEvent) {
+      handleKeyDown(e, setField);
+    }
+    window.addEventListener("keydown", _handleKeyDown);
+    return () => {
+      window.addEventListener("keydown", _handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     if (gameState === NOT_START) {

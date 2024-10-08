@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { TETRIS_BOX } from "../../common/constants";
-import placeBlock from "./placeBlock";
+import { TETRIS_BOX } from "../../../common/constants";
+import placeBlock from "../placeBlock";
 
 /*
   테트리스에서 다음 블록 리스트의 맨 앞 블록을 뺀 뒤 필드 맨 위에 배치하고 새로운 랜덤 블록을 리스트 맨 뒤에 삽입하는 함수.

@@ -1,3 +1,15 @@
+// 마우스 이벤트 핸들링 시 전달되는 Event 인수의 Event.button 관련 상수입니다.
+export const MOUSE_LEFT = 0;
+export const MOUSE_CENTER = 1;
+export const MOUSE_RIGHT = 2;
+
+// 키보드 이벤트 핸들링 시 전달되는 Event 인수의 Event.key 관련 상수입니다.
+export const KEY_UP = "ArrowUp";
+export const KEY_DOWN = "ArrowDown";
+export const KEY_RIGHT = "ArrowRight";
+export const KEY_LEFT = "ArrowLeft";
+export const KEY_SPACE = "Space";
+
 // 지뢰찾기에서 플레이어가 보고 있는 보드의 하나의 칸에 대한 상태입니다.
 export const MINE_BOX = {
   CLOSED: -1,
@@ -12,11 +24,6 @@ export const NOT_START = 0;
 export const ON_GOING = 1;
 export const GAME_OVER = 2;
 export const GAME_CLEAR = 3;
-
-// 마우스 이벤트 핸들링 시 전달되는 Event 인수의 Event.button 관련 상수입니다.
-export const MOUSE_LEFT = 0;
-export const MOUSE_CENTER = 1;
-export const MOUSE_RIGHT = 2;
 
 // 테트리스에서 하나의 칸에 대한 상태입니다.
 export const TETRIS_BOX = {
