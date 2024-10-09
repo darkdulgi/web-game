@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { KEY_DOWN, KEY_LEFT, KEY_RIGHT } from "../../../common/constants";
+import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../../../common/constants";
 import moveFallingBlock from "./moveFallingBlock";
+import rotateFallingBlock from "./rotateFallingBlock";
 
 export default function handleKeyDown(
   e: KeyboardEvent,
@@ -15,6 +16,8 @@ export default function handleKeyDown(
       moveFallingBlock(newField, 0, -1);
     } else if (e.key === KEY_DOWN) {
       moveFallingBlock(newField, 1, 0);
+    } else if (e.key === KEY_UP) {
+      rotateFallingBlock(newField, 1);
     }
 
     return newField;

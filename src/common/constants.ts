@@ -44,12 +44,12 @@ export const TETRIS_ROW = 24;
 export const TETRIS_COL = 10;
 
 // 테트리스에서 한번에 떨어질 수 있는 블록 뭉탱이의 분류입니다.
-export const TETRIS_SHAPE = {
-  LINEAR: 1,
-  SQUARE: 2,
-  LIMA_A: 3,
-  LIMA_B: 4,
-  MOUNTAIN: 5,
-  SNAKE_A: 6,
-  SNAKE_B: 7,
+export const TETROMINO = {
+  INDIA: 1,
+  OSCAR: 2,
+  LIMA: 3,
+  JULIETT: 4,
+  TANGO: 5,
+  SIERRA: 6,
+  ZULU: 7,
 };

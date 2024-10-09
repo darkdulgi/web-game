@@ -1,4 +1,4 @@
-import { TETRIS_SHAPE } from "../../../common/constants";
+import { TETROMINO } from "../../../common/constants";
 
 export default function placeBlock(
   field: number[][],
@@ -9,37 +9,37 @@ export default function placeBlock(
 ) {
   if (!field.length) return;
 
-  if (shape === TETRIS_SHAPE.LIMA_A) {
+  if (shape === TETROMINO.LIMA) {
     field[x][y + 2] = value;
     field[x + 1][y] = value;
     field[x + 1][y + 1] = value;
     field[x + 1][y + 2] = value;
-  } else if (shape === TETRIS_SHAPE.LIMA_B) {
+  } else if (shape === TETROMINO.JULIETT) {
     field[x][y] = value;
     field[x + 1][y] = value;
     field[x + 1][y + 1] = value;
     field[x + 1][y + 2] = value;
-  } else if (shape === TETRIS_SHAPE.LINEAR) {
+  } else if (shape === TETROMINO.INDIA) {
     field[x][y] = value;
     field[x][y + 1] = value;
     field[x][y + 2] = value;
     field[x][y + 3] = value;
-  } else if (shape === TETRIS_SHAPE.MOUNTAIN) {
+  } else if (shape === TETROMINO.TANGO) {
     field[x][y + 1] = value;
     field[x + 1][y] = value;
     field[x + 1][y + 1] = value;
     field[x + 1][y + 2] = value;
-  } else if (shape === TETRIS_SHAPE.SNAKE_A) {
+  } else if (shape === TETROMINO.SIERRA) {
     field[x][y + 1] = value;
     field[x][y + 2] = value;
     field[x + 1][y] = value;
     field[x + 1][y + 1] = value;
-  } else if (shape === TETRIS_SHAPE.SNAKE_B) {
+  } else if (shape === TETROMINO.ZULU) {
     field[x][y] = value;
     field[x][y + 1] = value;
     field[x + 1][y + 1] = value;
     field[x + 1][y + 2] = value;
-  } else if (shape === TETRIS_SHAPE.SQUARE) {
+  } else if (shape === TETROMINO.OSCAR) {
     field[x][y + 1] = value;
     field[x][y + 2] = value;
     field[x + 1][y + 1] = value;
