@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { NOT_START, ON_GOING, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../common/constants";
 import Field from "./field";
 import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
@@ -15,10 +15,12 @@ interface GameType {
 export default function Game({ score, setScore, gameState, setGameState }: GameType) {
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
-  const [fallingBlock, setFallingBlock] = useState<number>(0);
+  const fallingBlock = useRef<number>(0);
+  const [pieces, setPieces] = useState<number>(0);
 
   function initialize() {
     setScore(0);
+    setPieces(0);
     setField(
       Array<number>(TETRIS_ROW)
         .fill(TETRIS_BOX.EMPTY)
@@ -45,19 +47,22 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
     if (gameState === NOT_START) {
       initialize();
     } else if (gameState === ON_GOING) {
-      popAndPlaceBlockOnTop(nextBlockList, setNextBlockList, field, setField, setFallingBlock);
+      setPieces(1);
     }
   }, [gameState]);
 
   useEffect(() => {
+    if (gameState !== ON_GOING) return;
+    popAndPlaceBlockOnTop(nextBlockList, setNextBlockList, field, setField, fallingBlock);
+
     const timer = setInterval(() => {
-      dropPerSec(setField);
+      dropPerSec(setField, fallingBlock, setPieces);
     }, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [nextBlockList]);
+  }, [pieces]);
 
   return (
     <div>

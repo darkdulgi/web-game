@@ -11,7 +11,7 @@ export default function Tetris() {
 
       <Game score={score} setScore={setScore} gameState={gameState} setGameState={setGameState} />
 
-      <button onClick={() => setGameState(ON_GOING)}>Start</button>
+      <button onClick={() => setGameState(ON_GOING)} className="outline-none">Start</button>
     </section>
   );
 }

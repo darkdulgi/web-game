@@ -1,4 +1,4 @@
-import { TETRIS_SHAPE } from "../../common/constants";
+import { TETRIS_SHAPE } from "../../../common/constants";
 
 export default function placeBlock(
   field: number[][],

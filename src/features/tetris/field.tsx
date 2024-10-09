@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { TETRIS_BOX } from "../../common/constants";
 
 interface FieldType {
   field: number[][];
   setField: Dispatch<SetStateAction<number[][]>>;
-  fallingBlock: number;
+  fallingBlock: MutableRefObject<number>;
 }
 
 export default function Field({ field, setField, fallingBlock }: FieldType) {
@@ -12,7 +12,7 @@ export default function Field({ field, setField, fallingBlock }: FieldType) {
 
   function color(value: number, row: number) {
     if (value === TETRIS_BOX.FALLING) {
-      value = fallingBlock;
+      value = fallingBlock.current;
     } else if (row < 4) return "invisible";
 
     if (value === TETRIS_BOX.EMPTY) return "bg-neutral-300";
@@ -31,7 +31,7 @@ export default function Field({ field, setField, fallingBlock }: FieldType) {
       {field.map((row, x) => (
         <div key={x} className="flex">
           {row.map((box, y) => (
-            <div className={`h-8 w-8 ${color(box, x)} border`} key={y}></div>
+            <div className={`h-8 w-8 ${color(box, x)} border`} key={y} />
           ))}
         </div>
       ))}
