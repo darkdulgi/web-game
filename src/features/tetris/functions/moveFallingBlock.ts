@@ -7,39 +7,34 @@ import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 export default function moveFallingBlock(field: number[][], x: number, y: number) {
   if (!field.length || (!x && !y)) return false;
   let isPossible = true;
-
-  for (let i = 0; i < TETRIS_ROW; i++) {
-    for (let j = 0; j < TETRIS_COL; j++) {
-      if (field[i][j] !== TETRIS_BOX.FALLING) continue;
-      const xx = x + i;
-      const yy = y + j;
-      if (
-        xx < 0 ||
-        xx >= TETRIS_ROW ||
-        yy < 0 ||
-        yy >= TETRIS_COL ||
-        (field[xx][yy] !== TETRIS_BOX.FALLING && field[xx][yy] !== TETRIS_BOX.EMPTY)
-      ) {
-        isPossible = false;
+  const fallingBlockList: number[][] = [];
+  field.forEach((row, xpos) => {
+    row.forEach((value, ypos) => {
+      if (value === TETRIS_BOX.FALLING) {
+        fallingBlockList.push([xpos, ypos]);
       }
-    }
-  }
-  if (isPossible) {
-    for (
-      let i = x > 0 ? TETRIS_ROW - 1 - x : x;
-      x > 0 ? i >= 0 : i < TETRIS_ROW;
-      i += x > 0 ? -1 : 1
+    });
+  });
+  fallingBlockList.forEach((pos) => {
+    const xpos = pos[0] + x;
+    const ypos = pos[1] + y;
+    if (
+      xpos < 0 ||
+      xpos >= TETRIS_ROW ||
+      ypos < 0 ||
+      ypos >= TETRIS_COL ||
+      (field[xpos][ypos] !== TETRIS_BOX.FALLING && field[xpos][ypos] !== TETRIS_BOX.EMPTY)
     ) {
-      for (
-        let j = y > 0 ? TETRIS_COL - 1 - y : y;
-        y > 0 ? j >= 0 : j < TETRIS_COL;
-        j += y > 0 ? -1 : 1
-      ) {
-        if (field[i][j] === TETRIS_BOX.FALLING) {
-          [field[i][j], field[i + x][j + y]] = [field[i + x][j + y], field[i][j]];
-        }
-      }
+      isPossible = false;
     }
+  });
+  if (isPossible) {
+    fallingBlockList.forEach((pos) => {
+      field[pos[0]][pos[1]] = TETRIS_BOX.EMPTY;
+    });
+    fallingBlockList.forEach((pos) => {
+      field[pos[0] + x][pos[1] + y] = TETRIS_BOX.FALLING;
+    });
   }
 
   return isPossible;
