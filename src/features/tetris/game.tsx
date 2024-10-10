@@ -15,7 +15,7 @@ interface GameType {
 export default function Game({ score, setScore, gameState, setGameState }: GameType) {
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
-  const fallingBlock = useRef<number>(0);
+  const fallingBlock = useRef<number[]>([0, 0]);
   const [pieces, setPieces] = useState<number>(0);
 
   function initialize() {
@@ -35,7 +35,7 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
 
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
-      handleKeyDown(e, setField);
+      handleKeyDown(e, setField, fallingBlock);
     }
     window.addEventListener("keydown", _handleKeyDown);
     return () => {

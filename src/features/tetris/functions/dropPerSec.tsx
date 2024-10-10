@@ -8,7 +8,7 @@ import { TETRIS_BOX } from "../../../common/constants";
 
 export default function dropPerSec(
   setField: Dispatch<SetStateAction<number[][]>>,
-  fallingBlock: MutableRefObject<number>,
+  fallingBlock: MutableRefObject<number[]>,
   setPieces: Dispatch<SetStateAction<number>>,
 ) {
   setField((_field) => {
@@ -21,7 +21,7 @@ export default function dropPerSec(
       newField.forEach((row) => {
         row.forEach((value, index) => {
           if (value === TETRIS_BOX.FALLING) {
-            row[index] = fallingBlock.current;
+            row[index] = fallingBlock.current[0];
           }
         });
       });

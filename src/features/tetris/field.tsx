@@ -4,7 +4,7 @@ import { TETRIS_BOX } from "../../common/constants";
 interface FieldType {
   field: number[][];
   setField: Dispatch<SetStateAction<number[][]>>;
-  fallingBlock: MutableRefObject<number>;
+  fallingBlock: MutableRefObject<number[]>;
 }
 
 export default function Field({ field, setField, fallingBlock }: FieldType) {
@@ -12,7 +12,7 @@ export default function Field({ field, setField, fallingBlock }: FieldType) {
 
   function color(value: number, row: number) {
     if (value === TETRIS_BOX.FALLING) {
-      value = fallingBlock.current;
+      value = fallingBlock.current[0];
     } else if (row < 4) return "invisible";
 
     if (value === TETRIS_BOX.EMPTY) return "bg-neutral-300";

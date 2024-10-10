@@ -6,6 +6,7 @@ import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 
 export default function moveFallingBlock(field: number[][], x: number, y: number) {
   if (!field.length || (!x && !y)) return false;
+
   let isPossible = true;
   const fallingBlockList: number[][] = [];
   field.forEach((row, xpos) => {
