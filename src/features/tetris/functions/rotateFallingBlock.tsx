@@ -41,9 +41,11 @@ export default function rotateFallingBlock(
       field[block[0]][block[1]] = TETRIS_BOX.EMPTY;
     });
     fallingBlockList.forEach((block) => {
-      field[centerPos[0] + block[1] - centerPos[1]][centerPos[1] + centerPos[0] - block[0]] =
-        TETRIS_BOX.FALLING;
+      field[centerPos[0] + r * (block[1] - centerPos[1])][
+        centerPos[1] + r * (centerPos[0] - block[0])
+      ] = TETRIS_BOX.FALLING;
     });
-    fallingBlock.current[1] = (fallingBlock.current[1] + 1) % 4;
+
+    fallingBlock.current[1] = (fallingBlock.current[1] + r + 4) % 4;
   }
 }
