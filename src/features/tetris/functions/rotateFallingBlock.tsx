@@ -24,6 +24,16 @@ export default function rotateFallingBlock(
     const dx = [0.5, 0.5, -0.5, 0.5];
     const dy = [0.5, -0.5, 0.5, 0.5];
     centerPos = [fallingBlockList[1][0] + dx[cur[1]], fallingBlockList[1][1] + dy[cur[1]]];
+  } else {
+    let centerIdx: number[] = [];
+    if (cur[0] === TETROMINO.JULIETT) {
+      centerIdx = [2, 2, 1, 1];
+    } else if (cur[0] === TETROMINO.SIERRA) {
+      centerIdx = [3, 1, 0, 2];
+    } else {
+      centerIdx = [2, 1, 1, 2];
+    }
+    centerPos = [...fallingBlockList[centerIdx[cur[1]]]];
   }
 
   if (centerPos.length) {
