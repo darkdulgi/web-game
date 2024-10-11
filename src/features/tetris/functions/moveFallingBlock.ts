@@ -1,8 +1,12 @@
 import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 
-/*
-  테트리스에서 떨어지는 블록을 일정 거리로 움직이는 함수. 움직이지 못할 경우 false, 아니면 true를 반환.
-*/
+/**
+ * 테트리스에서 떨어지는 블록을 움직입니다.
+ * @param field - 테트리스가 진행되는 필드인 2차원 배열
+ * @param x - 떨어지는 블록을 움직이려는 상하 변화값
+ * @param y - 떨어지는 블록을 움직이려는 좌우 변화값
+ * @returns - 블록을 움직이는 것이 가능할 시 true, 아니면 false
+ */
 
 export default function moveFallingBlock(field: number[][], x: number, y: number) {
   if (!field.length || (!x && !y)) return false;

@@ -1,6 +1,14 @@
 import { MutableRefObject } from "react";
 import { TETRIS_BOX, TETROMINO } from "../../../common/constants";
 
+/**
+ * 테트리스에서 떨어지는 블록을 회전시킵니다.
+ * @param field - 게임이 진행되는 2차원 배열
+ * @param fallingBlock - 떨어지는 블록의 모양(테트로미노)과 현재 회전 상태를 나타내는 길이 2인 1차원 배열
+ * @param r - 90도로 회전시키려는 방향, 1:시계방향, -1:반시계방향
+ * @returns 반환값 없음
+ */
+
 export default function rotateFallingBlock(
   field: number[][],
   fallingBlock: MutableRefObject<number[]>,
@@ -12,6 +20,7 @@ export default function rotateFallingBlock(
   const cur = [...fallingBlock.current];
   let centerPos: number[] = [];
 
+  // 떨어지는 블록을 구성하는 각각의 좌표([x,y])를 따로 배열에 저장합니다.
   field.forEach((row, xpos) => {
     row.forEach((value, ypos) => {
       if (value === TETRIS_BOX.FALLING) {
@@ -19,6 +28,8 @@ export default function rotateFallingBlock(
       }
     });
   });
+
+  // 회전의 중심으로 할 좌표를 떨어지는 블록의 모양에 따라 다르게 정의합니다.
   if (cur[0] === TETROMINO.OSCAR) return;
   if (cur[0] === TETROMINO.INDIA) {
     const dx = [0.5, 0.5, -0.5, 0.5];
@@ -36,6 +47,7 @@ export default function rotateFallingBlock(
     centerPos = [...fallingBlockList[centerIdx[cur[1]]]];
   }
 
+  // 회전의 중심을 기준으로 블록을 회전시킵니다.
   if (centerPos.length) {
     fallingBlockList.forEach((block) => {
       field[block[0]][block[1]] = TETRIS_BOX.EMPTY;
