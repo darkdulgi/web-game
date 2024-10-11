@@ -1,5 +1,6 @@
 import { MutableRefObject } from "react";
 import { TETRIS_BOX, TETROMINO } from "../../../common/constants";
+import kickWall from "./kickWall";
 
 /**
  * 테트리스에서 떨어지는 블록을 회전시킵니다.
@@ -14,7 +15,7 @@ export default function rotateFallingBlock(
   fallingBlock: MutableRefObject<number[]>,
   r: number,
 ) {
-  if (!field.length || !r) return;
+  if (!field.length || (r !== 1 && r !== -1)) return;
 
   const fallingBlockList: number[][] = [];
   const cur = [...fallingBlock.current];
@@ -47,17 +48,23 @@ export default function rotateFallingBlock(
     centerPos = [...fallingBlockList[centerIdx[cur[1]]]];
   }
 
-  // 회전의 중심을 기준으로 블록을 회전시킵니다.
-  if (centerPos.length) {
-    fallingBlockList.forEach((block) => {
-      field[block[0]][block[1]] = TETRIS_BOX.EMPTY;
-    });
-    fallingBlockList.forEach((block) => {
-      field[centerPos[0] + r * (block[1] - centerPos[1])][
-        centerPos[1] + r * (centerPos[0] - block[0])
-      ] = TETRIS_BOX.FALLING;
-    });
+  // centerPos를 기준으로 회전시킨 좌표를 계산합니다.
+  fallingBlockList.forEach((block) => {
+    field[block[0]][block[1]] = TETRIS_BOX.EMPTY;
+  });
+  const rotatedBlockList = fallingBlockList.map((block) => {
+    return [
+      centerPos[0] + r * (block[1] - centerPos[1]),
+      centerPos[1] + r * (centerPos[0] - block[0]),
+    ];
+  });
 
-    fallingBlock.current[1] = (fallingBlock.current[1] + r + 4) % 4;
+  // 블록을 회전시키며, 그럴 수 없으면 원상태로 복구합니다.
+  if (!kickWall(field, rotatedBlockList, cur, r === 1)) {
+    fallingBlockList.forEach((block) => {
+      field[block[0]][block[1]] = TETRIS_BOX.FALLING;
+    });
   }
+
+  fallingBlock.current[1] = (fallingBlock.current[1] + r + 4) % 4;
 }
