@@ -39,7 +39,7 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
     }
     window.addEventListener("keydown", _handleKeyDown);
     return () => {
-      window.addEventListener("keydown", _handleKeyDown);
+      window.removeEventListener("keydown", _handleKeyDown);
     };
   }, []);
 

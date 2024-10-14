@@ -38,12 +38,12 @@ export default function kickWall(
   const testList =
     fallingBlock[0] !== TETROMINO.INDIA ? wallKickData[caseIdx] : wallKickData_INDIA[caseIdx];
 
-  testList.forEach((test) => {
+  testList.forEach(([text_x, text_y]) => {
     if (success) return;
     let isFailed: boolean = false;
-    rotatedBlockList.forEach((block) => {
-      const x = block[0] - test[1];
-      const y = block[1] + test[0];
+    rotatedBlockList.forEach(([block_x, block_y]) => {
+      const x = block_x - text_y;
+      const y = block_y + text_x;
       if (
         x < 0 ||
         x >= TETRIS_ROW ||
@@ -56,10 +56,8 @@ export default function kickWall(
     });
 
     if (!isFailed) {
-      rotatedBlockList.forEach((block) => {
-        const x = block[0] - test[1];
-        const y = block[1] + test[0];
-        field[x][y] = TETRIS_BOX.FALLING;
+      rotatedBlockList.forEach(([block_x, block_y]) => {
+        field[block_x - text_y][block_y + text_x] = TETRIS_BOX.FALLING;
       });
       success = true;
     }

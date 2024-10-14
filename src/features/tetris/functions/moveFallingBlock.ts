@@ -3,13 +3,13 @@ import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 /**
  * 테트리스에서 떨어지는 블록을 움직입니다.
  * @param field - 테트리스가 진행되는 필드인 2차원 배열
- * @param x - 떨어지는 블록을 움직이려는 상하 변화값
- * @param y - 떨어지는 블록을 움직이려는 좌우 변화값
+ * @param dx - 떨어지는 블록을 움직이려는 상하 변화값
+ * @param dy - 떨어지는 블록을 움직이려는 좌우 변화값
  * @returns - 블록을 움직이는 것이 가능할 시 true, 아니면 false
  */
 
-export default function moveFallingBlock(field: number[][], x: number, y: number) {
-  if (!field.length || (!x && !y)) return false;
+export default function moveFallingBlock(field: number[][], dx: number, dy: number) {
+  if (!field.length || (!dx && !dy)) return false;
 
   let isPossible = true;
   const fallingBlockList: number[][] = [];
@@ -20,9 +20,9 @@ export default function moveFallingBlock(field: number[][], x: number, y: number
       }
     });
   });
-  fallingBlockList.forEach((pos) => {
-    const xpos = pos[0] + x;
-    const ypos = pos[1] + y;
+  fallingBlockList.forEach(([x, y]) => {
+    const xpos = x + dx;
+    const ypos = y + dy;
     if (
       xpos < 0 ||
       xpos >= TETRIS_ROW ||
@@ -34,11 +34,11 @@ export default function moveFallingBlock(field: number[][], x: number, y: number
     }
   });
   if (isPossible) {
-    fallingBlockList.forEach((pos) => {
-      field[pos[0]][pos[1]] = TETRIS_BOX.EMPTY;
+    fallingBlockList.forEach(([x, y]) => {
+      field[x][y] = TETRIS_BOX.EMPTY;
     });
-    fallingBlockList.forEach((pos) => {
-      field[pos[0] + x][pos[1] + y] = TETRIS_BOX.FALLING;
+    fallingBlockList.forEach(([x, y]) => {
+      field[x + dx][y + dy] = TETRIS_BOX.FALLING;
     });
   }
 

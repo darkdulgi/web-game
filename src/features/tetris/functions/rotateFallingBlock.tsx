@@ -49,20 +49,17 @@ export default function rotateFallingBlock(
   }
 
   // centerPos를 기준으로 회전시킨 좌표를 계산합니다.
-  fallingBlockList.forEach((block) => {
-    field[block[0]][block[1]] = TETRIS_BOX.EMPTY;
+  fallingBlockList.forEach(([x, y]) => {
+    field[x][y] = TETRIS_BOX.EMPTY;
   });
-  const rotatedBlockList = fallingBlockList.map((block) => {
-    return [
-      centerPos[0] + r * (block[1] - centerPos[1]),
-      centerPos[1] + r * (centerPos[0] - block[0]),
-    ];
+  const rotatedBlockList = fallingBlockList.map(([x, y]) => {
+    return [centerPos[0] + r * (y - centerPos[1]), centerPos[1] + r * (centerPos[0] - x)];
   });
 
   // 블록을 회전시키며, 그럴 수 없으면 원상태로 복구합니다.
   if (!kickWall(field, rotatedBlockList, cur, r === 1)) {
-    fallingBlockList.forEach((block) => {
-      field[block[0]][block[1]] = TETRIS_BOX.FALLING;
+    fallingBlockList.forEach(([x, y]) => {
+      field[x][y] = TETRIS_BOX.FALLING;
     });
   }
 
