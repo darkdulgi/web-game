@@ -56,7 +56,7 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
     popAndPlaceBlockOnTop(nextBlockList, setNextBlockList, field, setField, fallingBlock);
 
     const timer = setInterval(() => {
-      dropPerSec(setField, fallingBlock, setPieces);
+      dropPerSec(setField, fallingBlock, setPieces, setScore);
     }, 1000);
 
     return () => {

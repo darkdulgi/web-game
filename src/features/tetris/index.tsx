@@ -9,9 +9,13 @@ export default function Tetris() {
     <section className="w-full flex flex-col items-center">
       <span>Tetris</span>
 
+      <span>Score: {score}</span>
+
       <Game score={score} setScore={setScore} gameState={gameState} setGameState={setGameState} />
 
-      <button onClick={() => setGameState(ON_GOING)} className="outline-none">Start</button>
+      <button onClick={() => setGameState(ON_GOING)} className="outline-none">
+        Start
+      </button>
     </section>
   );
 }
