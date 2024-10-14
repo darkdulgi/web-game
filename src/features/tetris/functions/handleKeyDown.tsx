@@ -2,6 +2,7 @@ import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../../../common/constants";
 import moveFallingBlock from "./moveFallingBlock";
 import rotateFallingBlock from "./rotateFallingBlock";
+import expectFallingBlock from "./expectFallingBlock";
 
 export default function handleKeyDown(
   e: KeyboardEvent,
@@ -22,6 +23,8 @@ export default function handleKeyDown(
     } else if (e.key === "q") {
       rotateFallingBlock(newField, fallingBlock, -1);
     }
+
+    expectFallingBlock(newField);
 
     return newField;
   });

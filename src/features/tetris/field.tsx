@@ -16,6 +16,7 @@ export default function Field({ field, setField, fallingBlock }: FieldType) {
     } else if (row < 4) return "invisible";
 
     if (value === TETRIS_BOX.EMPTY) return "bg-neutral-300";
+    if (value === TETRIS_BOX.EXPECTED) return "bg-neutral-400";
     if (value === TETRIS_BOX.YELLOW) return "bg-yellow-300";
     if (value === TETRIS_BOX.BLUE) return "bg-blue-300";
     if (value === TETRIS_BOX.GREEN) return "bg-green-300";

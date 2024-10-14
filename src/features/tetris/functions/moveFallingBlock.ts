@@ -28,7 +28,7 @@ export default function moveFallingBlock(field: number[][], dx: number, dy: numb
       xpos >= TETRIS_ROW ||
       ypos < 0 ||
       ypos >= TETRIS_COL ||
-      (field[xpos][ypos] !== TETRIS_BOX.FALLING && field[xpos][ypos] !== TETRIS_BOX.EMPTY)
+      (field[xpos][ypos] !== TETRIS_BOX.FALLING && field[xpos][ypos] >= 0)
     ) {
       isPossible = false;
     }

@@ -27,6 +27,7 @@ export const GAME_CLEAR = 3;
 
 // 테트리스에서 하나의 칸에 대한 상태입니다.
 export const TETRIS_BOX = {
+  EXPECTED: -2,
   EMPTY: -1,
   GRAY: 0,
   MINT: 1,

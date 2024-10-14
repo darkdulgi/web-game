@@ -1,6 +1,7 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { TETRIS_BOX } from "../../../common/constants";
 import placeBlock from "./placeBlock";
+import expectFallingBlock from "./expectFallingBlock";
 
 /*
   테트리스에서 다음 블록 리스트의 맨 앞 블록을 뺀 뒤 필드 맨 위에 배치하고 새로운 랜덤 블록을 리스트 맨 뒤에 삽입하는 함수.
@@ -25,6 +26,7 @@ export default function popAndPlaceBlockOnTop(
   // 이미 뺀 맨 앞 블록을 필드 맨 위에 배치합니다.
   const newField = field.map((arr) => [...arr]);
   placeBlock(newField, fallingBlock.current[0], 4, 3, TETRIS_BOX.FALLING);
+  expectFallingBlock(newField);
 
   setField(newField);
 }
