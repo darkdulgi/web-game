@@ -1,12 +1,6 @@
 import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 
-/**
- * 테트리스에서 현재 떨어지는 블록이 그대로 떨어질 시 예상되는 위치를 보여주는 함수입니다.
- * @param field - 현재 게임이 진행되는 2차원 필드
- * @returns - 반환값 없음
- */
-
-export default function expectFallingBlock(field: number[][]) {
+export default function doHardDrop(field: number[][]) {
   if (!field.length) return;
 
   const fallingBlockList: number[][] = [];
@@ -15,7 +9,6 @@ export default function expectFallingBlock(field: number[][]) {
     for (let y = 0; y < TETRIS_COL; y++) {
       if (field[x][y] === TETRIS_BOX.FALLING) {
         fallingBlockList.push([x, y]);
-      } else if (field[x][y] === TETRIS_BOX.EXPECTED) {
         field[x][y] = TETRIS_BOX.EMPTY;
       }
     }
@@ -37,8 +30,6 @@ export default function expectFallingBlock(field: number[][]) {
   }
 
   fallingBlockList.forEach(([x, y]) => {
-    if (field[x][y] !== TETRIS_BOX.FALLING) {
-      field[x][y] = TETRIS_BOX.EXPECTED;
-    }
+    field[x][y] = TETRIS_BOX.FALLING;
   });
 }

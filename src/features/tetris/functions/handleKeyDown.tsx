@@ -3,6 +3,7 @@ import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../../../common/constants
 import moveFallingBlock from "./moveFallingBlock";
 import rotateFallingBlock from "./rotateFallingBlock";
 import expectFallingBlock from "./expectFallingBlock";
+import doHardDrop from "./doHardDrop";
 
 export default function handleKeyDown(
   e: KeyboardEvent,
@@ -22,6 +23,8 @@ export default function handleKeyDown(
       rotateFallingBlock(newField, fallingBlock, 1);
     } else if (e.key === "q") {
       rotateFallingBlock(newField, fallingBlock, -1);
+    } else if (e.key === " ") {
+      doHardDrop(newField);
     }
 
     expectFallingBlock(newField);
