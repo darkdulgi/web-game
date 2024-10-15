@@ -1,21 +1,31 @@
-import { useState } from "react";
-import { NOT_START, ON_GOING } from "../../common/constants";
+import { MouseEvent, useState } from "react";
+import { GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Game from "./game";
 
 export default function Tetris() {
   const [score, setScore] = useState<number>(0);
   const [gameState, setGameState] = useState<number>(NOT_START);
+
+  function handleMouseDown(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    if (gameState === NOT_START) setGameState(ON_GOING);
+    else setGameState(NOT_START);
+  }
+
   return (
     <section className="w-full flex flex-col items-center">
       <span>Tetris</span>
 
       <span>Score: {score}</span>
 
-      <Game score={score} setScore={setScore} gameState={gameState} setGameState={setGameState} />
+      <Game setScore={setScore} gameState={gameState} setGameState={setGameState} />
 
-      <button onClick={() => setGameState(ON_GOING)} className="outline-none">
-        Start
+      <button onMouseDown={handleMouseDown} className="">
+        {gameState === NOT_START ? "Start" : "Retry"}
       </button>
+
+      <span className="text-red-500">{gameState === GAME_OVER && "Game Over"}</span>
     </section>
   );
 }

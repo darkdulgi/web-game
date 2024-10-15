@@ -49,7 +49,7 @@ export default function kickWall(
         x >= TETRIS_ROW ||
         y < 0 ||
         y >= TETRIS_COL ||
-        field[x][y] !== TETRIS_BOX.EMPTY
+        (field[x][y] >= 0 && field[x][y] !== TETRIS_BOX.FALLING)
       ) {
         isFailed = true;
       }
