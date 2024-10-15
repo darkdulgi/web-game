@@ -1,8 +1,7 @@
 import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 
-export default function doHardDrop(field: number[][]) {
+export default function doHardDrop(field: number[][], fallingBlockShape: number) {
   if (!field.length) return;
-
   const fallingBlockList: number[][] = [];
 
   for (let x = 0; x < TETRIS_ROW; x++) {
@@ -30,6 +29,6 @@ export default function doHardDrop(field: number[][]) {
   }
 
   fallingBlockList.forEach(([x, y]) => {
-    field[x][y] = TETRIS_BOX.FALLING;
+    field[x][y] = fallingBlockShape;
   });
 }

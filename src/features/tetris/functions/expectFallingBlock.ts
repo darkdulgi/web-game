@@ -21,7 +21,7 @@ export default function expectFallingBlock(field: number[][]) {
     }
   }
 
-  while (true) {
+  while (fallingBlockList.length) {
     let isBottom = false;
     fallingBlockList.forEach(([x, y]) => {
       if (x + 1 >= TETRIS_ROW || (field[x + 1][y] >= 0 && field[x + 1][y] !== TETRIS_BOX.FALLING)) {

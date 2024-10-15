@@ -35,7 +35,7 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
 
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
-      handleKeyDown(e, setField, fallingBlock);
+      handleKeyDown(e, setField, setPieces, setScore, fallingBlock);
     }
     window.addEventListener("keydown", _handleKeyDown);
     return () => {
