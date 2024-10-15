@@ -1,10 +1,18 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { NOT_START, ON_GOING, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../common/constants";
+import {
+  GAME_OVER,
+  NOT_START,
+  ON_GOING,
+  TETRIS_BOX,
+  TETRIS_COL,
+  TETRIS_ROW,
+} from "../../common/constants";
 import Field from "./field";
 import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
 import dropPerSec from "./functions/dropPerSec";
 import handleKeyDown from "./functions/handleKeyDown";
 import checkWarning from "./functions/checkWarning";
+import isGameOver from "./functions/isGameOver";
 
 interface GameType {
   setScore: Dispatch<SetStateAction<number>>;
@@ -76,6 +84,9 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
 
   useEffect(() => {
     if (!field.length) return;
+    if (isGameOver(field)) {
+      setGameState(GAME_OVER);
+    }
   }, [field]);
 
   return (
