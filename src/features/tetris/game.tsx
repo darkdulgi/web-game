@@ -4,6 +4,7 @@ import Field from "./field";
 import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
 import dropPerSec from "./functions/dropPerSec";
 import handleKeyDown from "./functions/handleKeyDown";
+import checkWarning from "./functions/checkWarning";
 
 interface GameType {
   score: number;
@@ -17,6 +18,7 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
   const fallingBlock = useRef<number[]>([0, 0]);
   const [pieces, setPieces] = useState<number>(0);
+  const [warning, setWarning] = useState<boolean>(false);
 
   function initialize() {
     setScore(0);
@@ -53,7 +55,8 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
 
   useEffect(() => {
     if (gameState !== ON_GOING) return;
-    popAndPlaceBlockOnTop(nextBlockList, setNextBlockList, field, setField, fallingBlock);
+    checkWarning(field, setWarning);
+    popAndPlaceBlockOnTop(nextBlockList, setNextBlockList, field, setField, fallingBlock, setWarning);
 
     const timer = setInterval(() => {
       dropPerSec(setField, fallingBlock, setPieces, setScore);
@@ -65,8 +68,10 @@ export default function Game({ score, setScore, gameState, setGameState }: GameT
   }, [pieces]);
 
   return (
-    <div>
+    <div className="flex">
+      <span className="text-red-600">{warning && "!위험!"}</span>
       <Field field={field} setField={setField} fallingBlock={fallingBlock} />
+      <span className="text-red-600">{warning && "!위험!"}</span>
     </div>
   );
 }
