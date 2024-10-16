@@ -13,6 +13,8 @@ import dropPerSec from "./functions/dropPerSec";
 import handleKeyDown from "./functions/handleKeyDown";
 import checkWarning from "./functions/checkWarning";
 import isGameOver from "./functions/isGameOver";
+import Hold from "./hold";
+import NextBlock from "./nextBlock";
 
 interface GameType {
   setScore: Dispatch<SetStateAction<number>>;
@@ -26,11 +28,13 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
   const fallingBlock = useRef<number[]>([0, 0]);
   const [pieces, setPieces] = useState<number>(0);
   const [warning, setWarning] = useState<boolean>(false);
+  const [holding, setHolding] = useState<number[]>([-1, 1]);
 
   function initialize() {
     setScore(0);
     setPieces(0);
     setWarning(false);
+    setHolding([-1, 1]);
     setField(
       Array<number>(TETRIS_ROW)
         .fill(TETRIS_BOX.EMPTY)
@@ -46,7 +50,15 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
       if (gameState !== ON_GOING) return;
-      handleKeyDown(e, setField, setPieces, setScore, fallingBlock);
+      handleKeyDown(
+        e,
+        setField,
+        setPieces,
+        setScore,
+        setHolding,
+        setNextBlockList,
+        fallingBlock,
+      );
     }
     window.addEventListener("keydown", _handleKeyDown);
 
@@ -74,7 +86,7 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
     );
 
     const timer = setInterval(() => {
-      dropPerSec(setField, fallingBlock, setPieces, setScore);
+      dropPerSec(setField, fallingBlock, setPieces, setScore, setHolding);
     }, 1000);
 
     return () => {
@@ -91,9 +103,11 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
 
   return (
     <div className="flex">
+      <Hold holding={holding} />
       <span className="text-red-600">{warning && "!위험!"}</span>
       <Field field={field} fallingBlock={fallingBlock} />
       <span className="text-red-600">{warning && "!위험!"}</span>
+      <NextBlock nextBlockList={nextBlockList} />
     </div>
   );
 }

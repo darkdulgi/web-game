@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
-import { TETRIS_BOX } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
 
@@ -22,11 +22,20 @@ export default function popAndPlaceBlockOnTop(
     fallingBlock.current = [newBlockList.shift() as number, 0];
 
     // 다음 블록 리스트의 맨 뒤에 랜덤한 블록을 삽입합니다.
-    newBlockList.push(Math.floor(Math.random() * 7) + 1);
+    if (newBlockList.length < 5) {
+      newBlockList.push(Math.floor(Math.random() * 7) + 1);
+    }
     setNextBlockList(newBlockList);
 
     // 이미 뺀 맨 앞 블록을 필드 맨 위에 배치합니다.
     const newField = field.map((arr) => [...arr]);
+    for (let i = 0; i < TETRIS_ROW; i++) {
+      for (let j = 0; j < TETRIS_COL; j++) {
+        if (newField[i][j] === TETRIS_BOX.FALLING) {
+          newField[i][j] = TETRIS_BOX.EMPTY;
+        }
+      }
+    }
     placeBlock(newField, fallingBlock.current[0], warning ? 2 : 4, 3, TETRIS_BOX.FALLING);
     expectFallingBlock(newField);
 

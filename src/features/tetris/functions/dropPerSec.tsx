@@ -1,6 +1,6 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import moveFallingBlock from "./moveFallingBlock";
-import { TETRIS_BOX } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 import explode from "./explode";
 import isGameOver from "./isGameOver";
 
@@ -13,6 +13,7 @@ export default function dropPerSec(
   fallingBlock: MutableRefObject<number[]>,
   setPieces: Dispatch<SetStateAction<number>>,
   setScore: Dispatch<SetStateAction<number>>,
+  setHolding: Dispatch<SetStateAction<number[]>>,
 ) {
   setField((_field) => {
     const newField = _field.map((arr) => [...arr]);
@@ -20,13 +21,14 @@ export default function dropPerSec(
     // 떨어지는 블록을 아래로 한 칸 내립니다.
     if (moveFallingBlock(newField, 1, 0) === false) {
       // 내릴 공간이 없을 때, 떨어지는 블록을 고정 블록으로 전환합니다.
-      newField.forEach((row) => {
-        row.forEach((value, index) => {
-          if (value === TETRIS_BOX.FALLING) {
-            row[index] = fallingBlock.current[0];
+      for (let i = 0; i < TETRIS_ROW; i++) {
+        for (let j = 0; j < TETRIS_COL; j++) {
+          if (newField[i][j] === TETRIS_BOX.FALLING) {
+            newField[i][j] = fallingBlock.current[0];
           }
-        });
-      });
+        }
+      }
+      setHolding(([shape]) => [shape, 1]);
       explode(newField, setScore);
       if (!isGameOver(newField)) {
         setPieces((x) => x + 1);
