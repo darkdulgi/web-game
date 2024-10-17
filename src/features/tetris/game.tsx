@@ -50,15 +50,7 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
       if (gameState !== ON_GOING) return;
-      handleKeyDown(
-        e,
-        setField,
-        setPieces,
-        setScore,
-        setHolding,
-        setNextBlockList,
-        fallingBlock,
-      );
+      handleKeyDown(e, setField, setPieces, setScore, setHolding, setNextBlockList, fallingBlock);
     }
     window.addEventListener("keydown", _handleKeyDown);
 
@@ -71,6 +63,13 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
       window.removeEventListener("keydown", _handleKeyDown);
     };
   }, [gameState]);
+
+  useEffect(() => {
+    if (!field.length) return;
+    if (isGameOver(field)) {
+      setGameState(GAME_OVER);
+    }
+  }, [field]);
 
   useEffect(() => {
     if (gameState !== ON_GOING) return;
@@ -93,13 +92,6 @@ export default function Game({ setScore, gameState, setGameState }: GameType) {
       clearInterval(timer);
     };
   }, [pieces]);
-
-  useEffect(() => {
-    if (!field.length) return;
-    if (isGameOver(field)) {
-      setGameState(GAME_OVER);
-    }
-  }, [field]);
 
   return (
     <div className="flex">
