@@ -1,0 +1,26 @@
+import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { AllSetStateType } from "../game";
+
+export default function initialize({
+  setScore,
+  setPieces,
+  setWarning,
+  setHolding,
+  setField,
+  setNextBlockList,
+}: AllSetStateType) {
+  setScore(0);
+  setPieces(0);
+  setWarning(false);
+  setHolding([-1, 1]);
+  setField(
+    Array<number>(TETRIS_ROW)
+      .fill(TETRIS_BOX.EMPTY)
+      .map(() => Array<number>(TETRIS_COL).fill(TETRIS_BOX.EMPTY)),
+  );
+  let newArr: number[] = [];
+  for (let i = 0; i < 5; i++) {
+    newArr = [...newArr, Math.floor(Math.random() * 7) + 1];
+  }
+  setNextBlockList(newArr);
+}

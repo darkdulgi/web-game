@@ -3,7 +3,6 @@ import { GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Game from "./game";
 
 export default function Tetris() {
-  const [score, setScore] = useState<number>(0);
   const [gameState, setGameState] = useState<number>(NOT_START);
 
   function handleMouseDown(e: MouseEvent<HTMLButtonElement>) {
@@ -17,9 +16,7 @@ export default function Tetris() {
     <section className="w-full flex flex-col items-center">
       <span>Tetris</span>
 
-      <span>Score: {score}</span>
-
-      <Game setScore={setScore} gameState={gameState} setGameState={setGameState} />
+      <Game gameState={gameState} setGameState={setGameState} />
 
       <button onMouseDown={handleMouseDown} className="">
         {gameState === NOT_START ? "Start" : "Retry"}
