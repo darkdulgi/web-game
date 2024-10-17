@@ -74,7 +74,7 @@ export default function Game({ gameState, setGameState }: GameType) {
       field,
       setField,
       fallingBlock,
-      setWarning,
+      warning,
     );
 
     const timer = setInterval(() => {
