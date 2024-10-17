@@ -68,15 +68,8 @@ export default function Game({ gameState, setGameState }: GameType) {
 
   useEffect(() => {
     if (gameState !== ON_GOING) return;
-    popAndPlaceBlockOnTop(
-      nextBlockList,
-      setNextBlockList,
-      field,
-      setField,
-      fallingBlock,
-      warning,
-    );
 
+    popAndPlaceBlockOnTop(nextBlockList, field, warning, allSetState);
     const timer = setInterval(() => {
       dropPerSec(allSetState);
     }, 1000);

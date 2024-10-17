@@ -1,7 +1,7 @@
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { NEXT_BLOCK, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
+import { AllSetStateType } from "../game";
 
 /*
   테트리스에서 다음 블록 리스트의 맨 앞 블록을 뺀 뒤 필드 맨 위에 배치하고 새로운 랜덤 블록을 리스트 맨 뒤에 삽입하는 함수.
@@ -9,11 +9,9 @@ import expectFallingBlock from "./expectFallingBlock";
 
 export default function popAndPlaceBlockOnTop(
   nextBlockList: number[],
-  setNextBlockList: Dispatch<SetStateAction<number[]>>,
   field: number[][],
-  setField: Dispatch<SetStateAction<number[][]>>,
-  fallingBlock: MutableRefObject<number[]>,
   warning: boolean,
+  { fallingBlock, setNextBlockList, setField }: AllSetStateType,
 ) {
   const newBlockList = [...nextBlockList];
   // 다음 블록 리스트의 맨 뒤에 랜덤한 블록을 삽입합니다.
