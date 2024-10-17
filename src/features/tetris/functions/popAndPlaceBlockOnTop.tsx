@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { NEXT_BLOCK, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
 
@@ -16,15 +16,14 @@ export default function popAndPlaceBlockOnTop(
   setWarning: Dispatch<SetStateAction<boolean>>,
 ) {
   setWarning((warning) => {
-    // 다음 블록 리스트에서 맨 앞 블록을 뺀 뒤 '현재 떨어지고 있는 블록' 상태에 저장합니다.
     const newBlockList = [...nextBlockList];
-    if (!newBlockList.length) return warning;
-    fallingBlock.current = [newBlockList.shift() as number, 0];
-
     // 다음 블록 리스트의 맨 뒤에 랜덤한 블록을 삽입합니다.
-    if (newBlockList.length < 5) {
+    while (newBlockList.length < NEXT_BLOCK + 1) {
       newBlockList.push(Math.floor(Math.random() * 7) + 1);
     }
+
+    // 다음 블록 리스트에서 맨 앞 블록을 뺀 뒤 '현재 떨어지고 있는 블록' 상태에 저장합니다.
+    fallingBlock.current = [newBlockList.shift() as number, 0];
     setNextBlockList(newBlockList);
 
     // 이미 뺀 맨 앞 블록을 필드 맨 위에 배치합니다.

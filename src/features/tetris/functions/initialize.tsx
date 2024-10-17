@@ -7,7 +7,6 @@ export default function initialize({
   setWarning,
   setHolding,
   setField,
-  setNextBlockList,
 }: AllSetStateType) {
   setScore(0);
   setPieces(0);
@@ -18,9 +17,4 @@ export default function initialize({
       .fill(TETRIS_BOX.EMPTY)
       .map(() => Array<number>(TETRIS_COL).fill(TETRIS_BOX.EMPTY)),
   );
-  let newArr: number[] = [];
-  for (let i = 0; i < 5; i++) {
-    newArr = [...newArr, Math.floor(Math.random() * 7) + 1];
-  }
-  setNextBlockList(newArr);
 }
