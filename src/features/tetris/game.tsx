@@ -4,7 +4,6 @@ import Field from "./field";
 import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
 import dropPerSec from "./functions/dropPerSec";
 import handleKeyDown from "./functions/handleKeyDown";
-import checkWarning from "./functions/checkWarning";
 import isGameOver from "./functions/isGameOver";
 import Hold from "./hold";
 import NextBlock from "./nextBlock";
@@ -47,7 +46,7 @@ export default function Game({ gameState, setGameState }: GameType) {
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
       if (gameState !== ON_GOING) return;
-      handleKeyDown(e, setField, setPieces, setScore, setHolding, setNextBlockList, fallingBlock);
+      handleKeyDown(e, allSetState);
     }
     window.addEventListener("keydown", _handleKeyDown);
 
@@ -62,16 +61,13 @@ export default function Game({ gameState, setGameState }: GameType) {
   }, [gameState]);
 
   useEffect(() => {
-    if (!field.length) return;
-    if (isGameOver(field)) {
+    if (field.length && isGameOver(field)) {
       setGameState(GAME_OVER);
     }
   }, [field]);
 
   useEffect(() => {
     if (gameState !== ON_GOING) return;
-
-    checkWarning(field, setWarning);
     popAndPlaceBlockOnTop(
       nextBlockList,
       setNextBlockList,
@@ -82,7 +78,7 @@ export default function Game({ gameState, setGameState }: GameType) {
     );
 
     const timer = setInterval(() => {
-      dropPerSec(setField, fallingBlock, setPieces, setScore, setHolding);
+      dropPerSec(allSetState);
     }, 1000);
 
     return () => {

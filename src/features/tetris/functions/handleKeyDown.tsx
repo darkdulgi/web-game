@@ -1,4 +1,3 @@
-import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from "../../../common/constants";
 import moveFallingBlock from "./moveFallingBlock";
 import rotateFallingBlock from "./rotateFallingBlock";
@@ -7,15 +6,20 @@ import doHardDrop from "./doHardDrop";
 import explode from "./explode";
 import isGameOver from "./isGameOver";
 import swapBlock from "./swapBlock";
+import { AllSetStateType } from "../game";
+import checkWarning from "./checkWarning";
 
 export default function handleKeyDown(
   e: KeyboardEvent,
-  setField: Dispatch<SetStateAction<number[][]>>,
-  setPieces: Dispatch<SetStateAction<number>>,
-  setScore: Dispatch<SetStateAction<number>>,
-  setHolding: Dispatch<SetStateAction<number[]>>,
-  setNextBlockList: Dispatch<SetStateAction<number[]>>,
-  fallingBlock: MutableRefObject<number[]>,
+  {
+    setField,
+    setPieces,
+    setScore,
+    setHolding,
+    setNextBlockList,
+    setWarning,
+    fallingBlock,
+  }: AllSetStateType,
 ) {
   setField((field) => {
     const newField = field.map((arr) => [...arr]);
@@ -35,6 +39,7 @@ export default function handleKeyDown(
       explode(newField, setScore);
       setHolding(([shape]) => [shape, 1]);
       if (!isGameOver(newField)) {
+        checkWarning(newField, setWarning);
         setPieces((x) => x + 1);
       }
     } else if (e.key === "Shift") {
