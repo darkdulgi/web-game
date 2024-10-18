@@ -8,7 +8,7 @@ interface GameProps {
 export default function Game({ name, link }: GameProps) {
   return (
     <Link to={link}>
-      <div className="bg-white w-60 h-40 rounded-xl border-slate-800 shadow flex justify-center items-center">
+      <div className="bg-neutral-700 text-white w-60 h-40 rounded-xl flex justify-center items-center">
         {name}
       </div>
     </Link>
