@@ -14,11 +14,11 @@ export default function Tetris() {
 
   return (
     <section className="w-full flex flex-col items-center">
-      <span>Tetris</span>
+      <span className="text-white">Tetris</span>
 
       <Game gameState={gameState} setGameState={setGameState} />
 
-      <button onMouseDown={handleMouseDown} className="">
+      <button onMouseDown={handleMouseDown} className="text-white">
         {gameState === NOT_START ? "Start" : "Retry"}
       </button>
 

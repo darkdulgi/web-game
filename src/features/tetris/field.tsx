@@ -9,32 +9,40 @@ interface FieldType {
 export default function Field({ field, fallingBlock }: FieldType) {
   if (!field) return;
 
-  function color(value: number, row: number) {
-    if (value === TETRIS_BOX.FALLING) {
-      value = fallingBlock.current[0];
-    }
+  function imgSrc(value: number) {
+    if (value < 0) return;
+    let imgSrc: string = "";
 
-    if (value === TETRIS_BOX.EMPTY) {
-      if (row < 4) return "invisible";
-      return "bg-neutral-300";
-    }
-    if (value === TETRIS_BOX.EXPECTED) return "bg-neutral-400";
-    if (value === TETRIS_BOX.YELLOW) return "bg-yellow-300";
-    if (value === TETRIS_BOX.BLUE) return "bg-blue-300";
-    if (value === TETRIS_BOX.GREEN) return "bg-green-300";
-    if (value === TETRIS_BOX.MINT) return "bg-cyan-300";
-    if (value === TETRIS_BOX.ORANGE) return "bg-orange-300";
-    if (value === TETRIS_BOX.PURPLE) return "bg-purple-300";
-    if (value === TETRIS_BOX.RED) return "bg-red-300";
-    return "";
+    if (value === TETRIS_BOX.FALLING) value = fallingBlock.current[0];
+    if (value === TETRIS_BOX.YELLOW) imgSrc = "yellow_block.png";
+    if (value === TETRIS_BOX.BLUE) imgSrc = "blue_block.png";
+    if (value === TETRIS_BOX.GREEN) imgSrc = "green_block.png";
+    if (value === TETRIS_BOX.CYAN) imgSrc = "cyan_block.png";
+    if (value === TETRIS_BOX.PINK) imgSrc = "pink_block.png";
+    if (value === TETRIS_BOX.PURPLE) imgSrc = "purple_block.png";
+    if (value === TETRIS_BOX.RED) imgSrc = "red_block.png";
+    return `url("/tetris/${imgSrc}")`;
+  }
+
+  function emptyboxStyle(value: number, row: number) {
+    if (value >= 0) return;
+    let style = "";
+    if (row >= 4) style += "bg-black ";
+    if (value === TETRIS_BOX.EXPECTED) style += "border-2 border-neutral-500 ";
+    else if (row >= 4) style += "border border-neutral-950";
+    return style;
   }
 
   return (
     <div className="flex flex-col">
       {field.map((row, x) => (
         <div key={x} className="flex">
-          {row.map((box, y) => (
-            <div className={`h-8 w-8 ${color(box, x)} border`} key={y} />
+          {row.map((value, y) => (
+            <div
+              style={{ backgroundImage: imgSrc(value) }}
+              key={y}
+              className={`h-8 w-8 ${emptyboxStyle(value, x)}`}
+            />
           ))}
         </div>
       ))}

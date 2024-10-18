@@ -81,7 +81,7 @@ export default function Game({ gameState, setGameState }: GameType) {
 
   return (
     <>
-      <span>Score: {score}</span>
+      <span className="text-white">Score: {score}</span>
 
       <div className="flex">
         <Hold holding={holding} />
