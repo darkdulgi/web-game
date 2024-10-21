@@ -6,7 +6,7 @@ import dropPerSec from "./functions/dropPerSec";
 import handleKeyDown from "./functions/handleKeyDown";
 import isGameOver from "./functions/isGameOver";
 import Hold from "./hold";
-import NextBlock from "./nextBlock";
+import NextBlockAndScore from "./nextBlock";
 import initialize from "./functions/initialize";
 
 interface GameType {
@@ -82,8 +82,8 @@ export default function Game({ gameState, setGameState }: GameType) {
   return (
     <div className="flex mt-20">
       <Hold holding={holding} />
-      <Field field={field} fallingBlock={fallingBlock} />
-      <NextBlock nextBlockList={nextBlockList} />
+      <Field field={field} fallingBlock={fallingBlock} warning={warning} />
+      <NextBlockAndScore nextBlockList={nextBlockList} score={score} />
     </div>
   );
 }

@@ -4,9 +4,10 @@ import { TETRIS_BOX } from "../../common/constants";
 interface FieldType {
   field: number[][];
   fallingBlock: MutableRefObject<number[]>;
+  warning: boolean;
 }
 
-export default function Field({ field, fallingBlock }: FieldType) {
+export default function Field({ field, fallingBlock, warning }: FieldType) {
   if (!field) return;
 
   function imgSrc(value: number) {
@@ -25,8 +26,8 @@ export default function Field({ field, fallingBlock }: FieldType) {
   }
 
   return (
-    <div className="relative">
-      <div className="mx-1 absolute -translate-y-full flex flex-col">
+    <div className={`relative flex flex-col border-4 border-cyan-400 h-fit`}>
+      <div className="absolute -translate-y-full flex flex-col">
         {field
           .filter((_, x) => x < 4)
           .map((row, x) => (
@@ -38,21 +39,23 @@ export default function Field({ field, fallingBlock }: FieldType) {
           ))}
       </div>
 
-      <div className="flex flex-col mx-1 mb-1 outline outline-4 outline-cyan-400">
-        {field
-          .filter((_, x) => x >= 4)
-          .map((row, x) => (
-            <div key={x} className="flex">
-              {row.map((value, y) => (
-                <div
-                  style={{ backgroundImage: imgSrc(value) }}
-                  key={y}
-                  className={`h-8 w-8 bg-black ${value === TETRIS_BOX.EXPECTED ? "border-2 border-neutral-500" : value < 0 && "border border-neutral-950"}`}
-                />
-              ))}
-            </div>
-          ))}
-      </div>
+      {field
+        .filter((_, x) => x >= 4)
+        .map((row, x) => (
+          <div key={x} className="flex">
+            {row.map((value, y) => (
+              <div
+                style={{ backgroundImage: imgSrc(value) }}
+                key={y}
+                className={`h-8 w-8 bg-black ${value === TETRIS_BOX.EXPECTED ? "border-2 border-neutral-500" : value < 0 ? "border border-neutral-950" : "z-10"}`}
+              />
+            ))}
+          </div>
+        ))}
+
+      <div
+        className={`${!warning && "hidden"} absolute top-0 left-0 w-full h-full shadow-[inset_0_0_10px_10px_rgb(255,0,0);]`}
+      />
     </div>
   );
 }

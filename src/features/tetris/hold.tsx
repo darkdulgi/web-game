@@ -19,8 +19,9 @@ export default function Hold({ holding }: { holding: number[] }) {
   }
 
   return (
-    <div className="flex flex-col bg-cyan-400 outline outline-4 outline-cyan-400 w-40 h-fit">
-      <span className="font-bold">HOLD</span>
+    <div className="flex flex-col bg-cyan-400 border-4 border-cyan-400 border-r-0 w-40 h-fit">
+      <span className="font-bold text-center">HOLD</span>
+
       <div className="flex justify-center items-center w-full h-24 bg-black">
         <img
           className={`${shape === -1 ? "hidden" : !isPossible && "grayscale brightness-75"}`}

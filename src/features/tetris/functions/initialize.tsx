@@ -7,11 +7,13 @@ export default function initialize({
   setWarning,
   setHolding,
   setField,
+  setNextBlockList,
 }: AllSetStateType) {
   setScore(0);
   setPieces(0);
   setWarning(false);
   setHolding([-1, 1]);
+  setNextBlockList([]);
   setField(
     Array<number>(TETRIS_ROW)
       .fill(TETRIS_BOX.EMPTY)
