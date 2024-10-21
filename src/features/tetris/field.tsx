@@ -24,28 +24,35 @@ export default function Field({ field, fallingBlock }: FieldType) {
     return `url("/tetris/${imgSrc}")`;
   }
 
-  function emptyboxStyle(value: number, row: number) {
-    if (value >= 0) return;
-    let style = "";
-    if (row >= 4) style += "bg-black ";
-    if (value === TETRIS_BOX.EXPECTED) style += "border-2 border-neutral-500 ";
-    else if (row >= 4) style += "border border-neutral-950";
-    return style;
-  }
-
   return (
-    <div className="flex flex-col">
-      {field.map((row, x) => (
-        <div key={x} className="flex">
-          {row.map((value, y) => (
-            <div
-              style={{ backgroundImage: imgSrc(value) }}
-              key={y}
-              className={`h-8 w-8 ${emptyboxStyle(value, x)}`}
-            />
+    <div className="relative">
+      <div className="mx-1 absolute -translate-y-full flex flex-col">
+        {field
+          .filter((_, x) => x < 4)
+          .map((row, x) => (
+            <div key={x} className="flex">
+              {row.map((value, y) => (
+                <div style={{ backgroundImage: imgSrc(value) }} key={y} className="h-8 w-8" />
+              ))}
+            </div>
           ))}
-        </div>
-      ))}
+      </div>
+
+      <div className="flex flex-col mx-1 mb-1 outline outline-4 outline-cyan-400">
+        {field
+          .filter((_, x) => x >= 4)
+          .map((row, x) => (
+            <div key={x} className="flex">
+              {row.map((value, y) => (
+                <div
+                  style={{ backgroundImage: imgSrc(value) }}
+                  key={y}
+                  className={`h-8 w-8 bg-black ${value === TETRIS_BOX.EXPECTED ? "border-2 border-neutral-500" : value < 0 && "border border-neutral-950"}`}
+                />
+              ))}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function Tetris() {
 
   return (
     <section className="w-full flex flex-col items-center">
-      <span className="text-white">Tetris</span>
+      <span className="text-white text-5xl font-bold">Tetris</span>
 
       <Game gameState={gameState} setGameState={setGameState} />
 

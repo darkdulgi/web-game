@@ -80,16 +80,10 @@ export default function Game({ gameState, setGameState }: GameType) {
   }, [pieces]);
 
   return (
-    <>
-      <span className="text-white">Score: {score}</span>
-
-      <div className="flex">
-        <Hold holding={holding} />
-        <span className="text-red-600">{warning && "!위험!"}</span>
-        <Field field={field} fallingBlock={fallingBlock} />
-        <span className="text-red-600">{warning && "!위험!"}</span>
-        <NextBlock nextBlockList={nextBlockList} />
-      </div>
-    </>
+    <div className="flex mt-20">
+      <Hold holding={holding} />
+      <Field field={field} fallingBlock={fallingBlock} />
+      <NextBlock nextBlockList={nextBlockList} />
+    </div>
   );
 }
