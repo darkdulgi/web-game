@@ -5,9 +5,10 @@ interface FieldType {
   field: number[][];
   fallingBlock: MutableRefObject<number[]>;
   warning: boolean;
+  countdown: number;
 }
 
-export default function Field({ field, fallingBlock, warning }: FieldType) {
+export default function Field({ field, fallingBlock, warning, countdown }: FieldType) {
   if (!field) return;
 
   function imgSrc(value: number) {
@@ -56,6 +57,12 @@ export default function Field({ field, fallingBlock, warning }: FieldType) {
       <div
         className={`${!warning && "hidden"} absolute top-0 left-0 w-full h-full shadow-[inset_0_0_10px_10px_rgb(255,0,0);]`}
       />
+
+      <span
+        className={`${countdown <= 0 && "hidden"} text-yellow-300 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl`}
+      >
+        {countdown}
+      </span>
     </div>
   );
 }

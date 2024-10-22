@@ -12,6 +12,7 @@ import initialize from "./functions/initialize";
 interface GameType {
   gameState: number;
   setGameState: Dispatch<SetStateAction<number>>;
+  countdown: number;
 }
 
 export interface AllSetStateType {
@@ -24,7 +25,7 @@ export interface AllSetStateType {
   fallingBlock: MutableRefObject<number[]>;
 }
 
-export default function Game({ gameState, setGameState }: GameType) {
+export default function Game({ gameState, setGameState, countdown }: GameType) {
   const [score, setScore] = useState<number>(0);
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
@@ -82,7 +83,7 @@ export default function Game({ gameState, setGameState }: GameType) {
   return (
     <div className="flex mt-20">
       <Hold holding={holding} />
-      <Field field={field} fallingBlock={fallingBlock} warning={warning} />
+      <Field field={field} fallingBlock={fallingBlock} warning={warning} countdown={countdown} />
       <NextBlockAndScore nextBlockList={nextBlockList} score={score} />
     </div>
   );
