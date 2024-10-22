@@ -23,6 +23,7 @@ export interface AllSetStateType {
   setWarning: Dispatch<SetStateAction<boolean>>;
   setHolding: Dispatch<SetStateAction<number[]>>;
   fallingBlock: MutableRefObject<number[]>;
+  lineClearAudioRef: MutableRefObject<HTMLAudioElement | null>;
 }
 
 export default function Game({ gameState, setGameState, countdown }: GameType) {
@@ -33,6 +34,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
   const [warning, setWarning] = useState<boolean>(false);
   const [holding, setHolding] = useState<number[]>([-1, 1]);
   const fallingBlock = useRef<number[]>([0, 0]);
+  const lineClearAudioRef = useRef<HTMLAudioElement>(null);
 
   const allSetState = {
     setScore,
@@ -42,6 +44,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     setWarning,
     setHolding,
     fallingBlock,
+    lineClearAudioRef,
   };
 
   useEffect(() => {
@@ -56,8 +59,13 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     } else if (gameState === ON_GOING) {
       setPieces(1);
     }
+    
     return () => {
       window.removeEventListener("keydown", _handleKeyDown);
+      if (lineClearAudioRef.current) {
+        lineClearAudioRef.current.pause();
+        lineClearAudioRef.current.currentTime = 0;
+      }
     };
   }, [gameState]);
 
@@ -82,6 +90,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
 
   return (
     <div className="flex mt-20">
+      <audio ref={lineClearAudioRef} src="/tetris/line-clear.mp3" preload="auto" />
       <Hold holding={holding} />
       <Field field={field} fallingBlock={fallingBlock} warning={warning} countdown={countdown} />
       <NextBlockAndScore nextBlockList={nextBlockList} score={score} />

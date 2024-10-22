@@ -16,6 +16,7 @@ export default function dropPerSec({
   setScore,
   setHolding,
   setWarning,
+  lineClearAudioRef,
 }: AllSetStateType) {
   setField((_field) => {
     const newField = _field.map((arr) => [...arr]);
@@ -31,7 +32,7 @@ export default function dropPerSec({
         }
       }
       setHolding(([shape]) => [shape, 1]);
-      explode(newField, setScore);
+      explode(newField, setScore, lineClearAudioRef);
       if (!isGameOver(newField)) {
         checkWarning(newField, setWarning);
         setPieces((x) => x + 1);

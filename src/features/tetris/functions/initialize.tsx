@@ -8,6 +8,7 @@ export default function initialize({
   setHolding,
   setField,
   setNextBlockList,
+  lineClearAudioRef,
 }: AllSetStateType) {
   setScore(0);
   setPieces(0);
@@ -19,4 +20,7 @@ export default function initialize({
       .fill(TETRIS_BOX.EMPTY)
       .map(() => Array<number>(TETRIS_COL).fill(TETRIS_BOX.EMPTY)),
   );
+  if (lineClearAudioRef.current) {
+    lineClearAudioRef.current.volume = 0.3;
+  }
 }

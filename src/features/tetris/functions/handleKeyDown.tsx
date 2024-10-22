@@ -19,6 +19,7 @@ export default function handleKeyDown(
     setNextBlockList,
     setWarning,
     fallingBlock,
+    lineClearAudioRef,
   }: AllSetStateType,
 ) {
   setField((field) => {
@@ -36,7 +37,7 @@ export default function handleKeyDown(
       rotateFallingBlock(newField, fallingBlock, -1);
     } else if (e.key === " ") {
       doHardDrop(newField, fallingBlock.current[0]);
-      explode(newField, setScore);
+      explode(newField, setScore, lineClearAudioRef);
       setHolding(([shape]) => [shape, 1]);
       if (!isGameOver(newField)) {
         checkWarning(newField, setWarning);

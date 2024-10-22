@@ -5,6 +5,7 @@ import Game from "./game";
 export default function Tetris() {
   const [gameState, setGameState] = useState<number>(NOT_START);
   const [countdown, setCountdown] = useState<number>(-1);
+  const bgmRef = useRef<HTMLAudioElement>(null);
   const timer = useRef<number>();
 
   useEffect(() => {
@@ -13,6 +14,20 @@ export default function Tetris() {
       clearInterval(timer.current);
     }
   }, [countdown]);
+
+  useEffect(() => {
+    if (!bgmRef.current) return;
+    if (gameState === ON_GOING) {
+      bgmRef.current.play().catch((e) => console.log(e));
+    }
+
+    return () => {
+      if (bgmRef.current) {
+        bgmRef.current.pause();
+        bgmRef.current.currentTime = 0;
+      }
+    };
+  }, [gameState]);
 
   function handleMouseDown(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -28,6 +43,8 @@ export default function Tetris() {
 
   return (
     <section className="w-full flex flex-col items-center">
+      <audio ref={bgmRef} src="/tetris/bradinsky.mp3" preload="auto" />
+
       <span className="text-white text-5xl font-bold">Tetris</span>
 
       <Game gameState={gameState} setGameState={setGameState} countdown={countdown} />
