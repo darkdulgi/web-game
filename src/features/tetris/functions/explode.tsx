@@ -6,20 +6,21 @@ export default function explode(
   setScore: Dispatch<SetStateAction<number>>,
   lineClearAudioRef: MutableRefObject<HTMLAudioElement | null>,
 ) {
-  let isGotScore: boolean = false;
+  let fullLines: number = 0;
   // 꽉 찬 행이 있으면 그 행을 비우고 점수를 올립니다.
   for (let i = 4; i < TETRIS_ROW; i++) {
-    const isFull = field[i].every((value) => value >= 0 && value !== TETRIS_BOX.FALLING);
-    if (isFull) {
-      isGotScore = true;
-      setScore((x) => x + 100);
+    if (field[i].every((value) => value >= 0 && value !== TETRIS_BOX.FALLING)) {
+      fullLines++;
       for (let j = 0; j < TETRIS_COL; j++) {
         field[i][j] = TETRIS_BOX.EMPTY;
       }
     }
   }
 
-  if (isGotScore && lineClearAudioRef.current) {
+  // 점수를 계산하고 사운드 이펙트를 재생합니다.
+  if (fullLines > 0 && lineClearAudioRef.current) {
+    setScore((x) => x + fullLines);
+    lineClearAudioRef.current.currentTime = 0;
     lineClearAudioRef.current.play().catch((e) => console.log(e));
   }
 
