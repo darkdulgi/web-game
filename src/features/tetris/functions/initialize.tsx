@@ -11,7 +11,7 @@ export default function initialize({
   lineClearAudioRef,
 }: AllSetStateType) {
   setScore(0);
-  setTurns(0);
+  setTurns(-1);
   setWarning(false);
   setHolding([-1, 1]);
   setNextBlockList([]);

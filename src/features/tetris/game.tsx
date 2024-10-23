@@ -30,7 +30,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
   const [score, setScore] = useState<number>(0);
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
-  const [turns, setTurns] = useState<number>(0);
+  const [turns, setTurns] = useState<number>(-1);
   const [warning, setWarning] = useState<boolean>(false);
   const [holding, setHolding] = useState<number[]>([-1, 1]);
   const fallingBlock = useRef<number[]>([0, 0]);
@@ -57,9 +57,9 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     if (gameState === NOT_START) {
       initialize(allSetState);
     } else if (gameState === ON_GOING) {
-      setTurns(1);
+      setTurns(0);
     }
-    
+
     return () => {
       window.removeEventListener("keydown", _handleKeyDown);
       if (lineClearAudioRef.current) {
@@ -78,7 +78,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
   useEffect(() => {
     if (gameState !== ON_GOING) return;
 
-    popAndPlaceBlockOnTop(nextBlockList, field, warning, allSetState);
+    popAndPlaceBlockOnTop(nextBlockList, field, warning, turns, allSetState);
     const timer = setInterval(() => {
       dropPerSec(allSetState);
     }, 1000);

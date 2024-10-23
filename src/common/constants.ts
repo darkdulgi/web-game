@@ -44,8 +44,6 @@ export const TETRIS_BOX = {
 export const TETRIS_ROW = 24;
 export const TETRIS_COL = 10;
 
-// 테트리스에서 다음 나타날 블록이 보여지는 수입니다.
-export const NEXT_BLOCK = 5;
 // 테트리스에서 한번에 떨어질 수 있는 블록 뭉탱이의 분류입니다.
 export const TETROMINO = {
   INDIA: 1,

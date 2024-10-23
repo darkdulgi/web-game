@@ -1,7 +1,8 @@
-import { NEXT_BLOCK, TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
 import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
 import { AllSetStateType } from "../game";
+import shuffleList from "../../../common/utils/shuffleList";
 
 /**
  * 테트리스에서 한 턴이 시작되면 가장 먼저 실행되는 함수입니다.
@@ -12,12 +13,20 @@ export default function popAndPlaceBlockOnTop(
   nextBlockList: number[],
   field: number[][],
   warning: boolean,
+  turns: number,
   { fallingBlock, setNextBlockList, setField }: AllSetStateType,
 ) {
+  function insert7Bag(blockList: number[]) {
+    const mino = [1, 2, 3, 4, 5, 6, 7];
+    shuffleList(mino);
+    blockList.push(...mino);
+  }
   const newBlockList = [...nextBlockList];
-  // 다음 블록 리스트의 맨 뒤에 랜덤한 블록을 삽입합니다.
-  while (newBlockList.length < NEXT_BLOCK + 1) {
-    newBlockList.push(Math.floor(Math.random() * 7) + 1);
+
+  // 7-bag 규칙으로 다음에 나올 블록을 생성합니다. 랜덤으로 배치하되 7묶음 내에는 반드시 한 종류의 블록이 존재합니다.
+  if (turns % 7 === 0) {
+    insert7Bag(newBlockList);
+    if (turns === 0) insert7Bag(newBlockList);
   }
 
   // 다음 블록 리스트에서 맨 앞 블록을 뺀 뒤 '현재 떨어지고 있는 블록' 상태에 저장합니다.
