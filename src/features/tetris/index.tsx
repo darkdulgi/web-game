@@ -1,6 +1,7 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Game from "./game";
+import Logo from "./logo";
 
 export default function Tetris() {
   const [gameState, setGameState] = useState<number>(NOT_START);
@@ -44,15 +45,15 @@ export default function Tetris() {
   return (
     <section className="w-full flex flex-col items-center">
       <audio ref={bgmRef} src="/tetris/bradinsky.mp3" preload="auto" />
-
-      <span className="text-white text-5xl font-bold">Tetris</span>
-
+      <Logo />
       <Game gameState={gameState} setGameState={setGameState} countdown={countdown} />
-
-      <button disabled={countdown > 0} onMouseDown={handleMouseDown} className="text-white">
+      <button
+        disabled={countdown > 0}
+        onMouseDown={handleMouseDown}
+        className="mt-3 bg-black border-2 border-cyan-400 p-3 text-cyan-400"
+      >
         {gameState === NOT_START ? "Start" : "Retry"}
       </button>
-
       <span className="text-red-500">{gameState === GAME_OVER && "Game Over"}</span>
     </section>
   );
