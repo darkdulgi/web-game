@@ -31,9 +31,9 @@ export default function handleKeyDown(
       moveFallingBlock(newField, 0, -1);
     } else if (e.key === KEY_DOWN || e.key === "s") {
       moveFallingBlock(newField, 1, 0);
-    } else if (e.key === KEY_UP || e.key === "e") {
+    } else if (e.key === KEY_UP || e.key === "x") {
       rotateFallingBlock(newField, fallingBlock, 1);
-    } else if (e.key === "q") {
+    } else if (e.key === "z" || e.key === "Control") {
       rotateFallingBlock(newField, fallingBlock, -1);
     } else if (e.key === " ") {
       doHardDrop(newField, fallingBlock.current[0]);
@@ -43,7 +43,7 @@ export default function handleKeyDown(
         checkWarning(newField, setWarning);
         setPieces((x) => x + 1);
       }
-    } else if (e.key === "Shift") {
+    } else if (e.key === "Shift" || e.key === "c") {
       swapBlock(fallingBlock, setHolding, setNextBlockList, setPieces);
     }
 
