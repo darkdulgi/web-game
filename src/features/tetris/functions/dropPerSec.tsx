@@ -5,14 +5,15 @@ import isGameOver from "./isGameOver";
 import { AllSetStateType } from "../game";
 import checkWarning from "./checkWarning";
 
-/*
-  테트리스에서 떨어지는 블록이 더 떨어질 수 없으면 한 줄이 꽉 찼는지 체크해 그 줄을 터뜨리고, 그 후 게임 오버를 체크하고, 블록이 더 떨어질 수 있으면 그 블록을 한 칸 내리는 함수.
-*/
+/**
+ * 테트리스에서 블록이 맨 위에 생성되고 난 후, 1초마다 실행되는 함수입니다.
+ * 떨어지는 블록이 내려갈 공간이 없으면 다음 동작을 실행합니다.
+ */
 
 export default function dropPerSec({
   setField,
   fallingBlock,
-  setPieces,
+  setTurns,
   setScore,
   setHolding,
   setWarning,
@@ -31,11 +32,17 @@ export default function dropPerSec({
           }
         }
       }
+
+      // 다음 턴에선 홀딩을 가능하게 합니다.
       setHolding(([shape]) => [shape, 1]);
+
+      // 꽉 찬 행이 있으면 터뜨리고 점수를 계산합니다.
       explode(newField, setScore, lineClearAudioRef);
+
+      // 게임 오버 판정 시 다음 턴을 진행하지 않습니다. 다만 게임 오버 상태로 바꾸진 않습니다.
       if (!isGameOver(newField)) {
         checkWarning(newField, setWarning);
-        setPieces((x) => x + 1);
+        setTurns((x) => x + 1);
       }
     }
     return newField;

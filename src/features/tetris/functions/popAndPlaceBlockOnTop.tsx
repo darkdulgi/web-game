@@ -3,9 +3,10 @@ import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
 import { AllSetStateType } from "../game";
 
-/*
-  테트리스에서 다음 블록 리스트의 맨 앞 블록을 뺀 뒤 필드 맨 위에 배치하고 새로운 랜덤 블록을 리스트 맨 뒤에 삽입하는 함수.
-*/
+/**
+ * 테트리스에서 한 턴이 시작되면 가장 먼저 실행되는 함수입니다.
+ * 필드 최상단에서 떨어질 블록을 배치하고, 다음 블록 리스트를 갱신합니다.
+ */
 
 export default function popAndPlaceBlockOnTop(
   nextBlockList: number[],

@@ -13,7 +13,7 @@ export default function handleKeyDown(
   e: KeyboardEvent,
   {
     setField,
-    setPieces,
+    setTurns,
     setScore,
     setHolding,
     setNextBlockList,
@@ -41,10 +41,10 @@ export default function handleKeyDown(
       setHolding(([shape]) => [shape, 1]);
       if (!isGameOver(newField)) {
         checkWarning(newField, setWarning);
-        setPieces((x) => x + 1);
+        setTurns((x) => x + 1);
       }
     } else if (e.key === "Shift" || e.key === "c") {
-      swapBlock(fallingBlock, setHolding, setNextBlockList, setPieces);
+      swapBlock(fallingBlock, setHolding, setNextBlockList, setTurns);
     }
 
     expectFallingBlock(newField);

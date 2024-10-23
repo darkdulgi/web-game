@@ -19,7 +19,7 @@ export interface AllSetStateType {
   setScore: Dispatch<SetStateAction<number>>;
   setField: Dispatch<SetStateAction<number[][]>>;
   setNextBlockList: Dispatch<SetStateAction<number[]>>;
-  setPieces: Dispatch<SetStateAction<number>>;
+  setTurns: Dispatch<SetStateAction<number>>;
   setWarning: Dispatch<SetStateAction<boolean>>;
   setHolding: Dispatch<SetStateAction<number[]>>;
   fallingBlock: MutableRefObject<number[]>;
@@ -30,7 +30,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
   const [score, setScore] = useState<number>(0);
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
-  const [pieces, setPieces] = useState<number>(0);
+  const [turns, setTurns] = useState<number>(0);
   const [warning, setWarning] = useState<boolean>(false);
   const [holding, setHolding] = useState<number[]>([-1, 1]);
   const fallingBlock = useRef<number[]>([0, 0]);
@@ -40,7 +40,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     setScore,
     setField,
     setNextBlockList,
-    setPieces,
+    setTurns,
     setWarning,
     setHolding,
     fallingBlock,
@@ -57,7 +57,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     if (gameState === NOT_START) {
       initialize(allSetState);
     } else if (gameState === ON_GOING) {
-      setPieces(1);
+      setTurns(1);
     }
     
     return () => {
@@ -86,7 +86,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     return () => {
       clearInterval(timer);
     };
-  }, [pieces]);
+  }, [turns]);
 
   return (
     <div className="flex mt-20">

@@ -3,7 +3,7 @@ import { AllSetStateType } from "../game";
 
 export default function initialize({
   setScore,
-  setPieces,
+  setTurns,
   setWarning,
   setHolding,
   setField,
@@ -11,7 +11,7 @@ export default function initialize({
   lineClearAudioRef,
 }: AllSetStateType) {
   setScore(0);
-  setPieces(0);
+  setTurns(0);
   setWarning(false);
   setHolding([-1, 1]);
   setNextBlockList([]);
