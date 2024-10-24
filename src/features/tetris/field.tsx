@@ -1,14 +1,23 @@
-import { MutableRefObject } from "react";
-import { TETRIS_BOX } from "../../common/constants";
+import { MouseEvent, MutableRefObject } from "react";
+import { NOT_START, ON_GOING, TETRIS_BOX } from "../../common/constants";
 
 interface FieldType {
   field: number[][];
   fallingBlock: MutableRefObject<number[]>;
   warning: boolean;
   countdown: number;
+  handleMouseDown: (e: MouseEvent<HTMLButtonElement>) => void;
+  gameState: number;
 }
 
-export default function Field({ field, fallingBlock, warning, countdown }: FieldType) {
+export default function Field({
+  field,
+  fallingBlock,
+  warning,
+  countdown,
+  handleMouseDown,
+  gameState,
+}: FieldType) {
   if (!field) return;
 
   function imgSrc(value: number) {
@@ -34,7 +43,11 @@ export default function Field({ field, fallingBlock, warning, countdown }: Field
           .map((row, x) => (
             <div key={x} className="flex">
               {row.map((value, y) => (
-                <div style={{ backgroundImage: imgSrc(value) }} key={y} className="h-6 w-6 bg-cover xl:h-8 xl:w-8" />
+                <div
+                  style={{ backgroundImage: imgSrc(value) }}
+                  key={y}
+                  className="h-6 w-6 bg-cover xl:h-8 xl:w-8"
+                />
               ))}
             </div>
           ))}
@@ -63,6 +76,14 @@ export default function Field({ field, fallingBlock, warning, countdown }: Field
       >
         {countdown}
       </span>
+
+      <button
+        disabled={countdown > 0}
+        onMouseDown={handleMouseDown}
+        className={`${(countdown > 0 || gameState === ON_GOING) && "hidden"} z-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black border-4 border-red-600 p-3 xl:p-5 text-3xl xl:text-5xl font-bold text-red-600`}
+      >
+        {gameState === NOT_START ? "START" : "RETRY"}
+      </button>
     </div>
   );
 }

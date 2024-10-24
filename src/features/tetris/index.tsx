@@ -43,18 +43,16 @@ export default function Tetris() {
   }
 
   return (
-    <section className="w-full flex flex-col items-center">
+    <section className="w-full flex flex-col items-center relative">
       <audio ref={bgmRef} src="/tetris/bradinsky.mp3" preload="auto" />
       <Logo />
-      <Game gameState={gameState} setGameState={setGameState} countdown={countdown} />
-      <button
-        disabled={countdown > 0}
-        onMouseDown={handleMouseDown}
-        className="mt-3 bg-black border-2 border-cyan-400 p-3 text-cyan-400"
-      >
-        {gameState === NOT_START ? "Start" : "Retry"}
-      </button>
-      <span className="text-red-500">{gameState === GAME_OVER && "Game Over"}</span>
+      <Game
+        gameState={gameState}
+        setGameState={setGameState}
+        countdown={countdown}
+        handleMouseDown={handleMouseDown}
+      />
+      <span className="mt-3 text-red-600 text-xl xl:text-3xl font-bold">{gameState === GAME_OVER && "Game Over"}</span>
     </section>
   );
 }

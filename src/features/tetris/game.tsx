@@ -1,4 +1,12 @@
-import { Dispatch, MutableRefObject, SetStateAction, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  MouseEvent,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
 import Field from "./field";
 import popAndPlaceBlockOnTop from "./functions/popAndPlaceBlockOnTop";
@@ -13,6 +21,7 @@ interface GameType {
   gameState: number;
   setGameState: Dispatch<SetStateAction<number>>;
   countdown: number;
+  handleMouseDown: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface AllSetStateType {
@@ -26,7 +35,7 @@ export interface AllSetStateType {
   lineClearAudioRef: MutableRefObject<HTMLAudioElement | null>;
 }
 
-export default function Game({ gameState, setGameState, countdown }: GameType) {
+export default function Game({ gameState, setGameState, countdown, handleMouseDown }: GameType) {
   const [score, setScore] = useState<number>(0);
   const [field, setField] = useState<number[][]>([]);
   const [nextBlockList, setNextBlockList] = useState<number[]>([]);
@@ -92,7 +101,14 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
     <div className="flex mt-10 xl:mt-20">
       <audio ref={lineClearAudioRef} src="/tetris/line-clear.mp3" preload="auto" />
       <Hold holding={holding} />
-      <Field field={field} fallingBlock={fallingBlock} warning={warning} countdown={countdown} />
+      <Field
+        field={field}
+        fallingBlock={fallingBlock}
+        warning={warning}
+        countdown={countdown}
+        gameState={gameState}
+        handleMouseDown={handleMouseDown}
+      />
       <NextBlockAndScore nextBlockList={nextBlockList} score={score} />
     </div>
   );
