@@ -89,7 +89,7 @@ export default function Game({ gameState, setGameState, countdown }: GameType) {
   }, [turns]);
 
   return (
-    <div className="flex mt-20">
+    <div className="flex mt-10 xl:mt-20">
       <audio ref={lineClearAudioRef} src="/tetris/line-clear.mp3" preload="auto" />
       <Hold holding={holding} />
       <Field field={field} fallingBlock={fallingBlock} warning={warning} countdown={countdown} />

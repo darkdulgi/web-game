@@ -8,7 +8,7 @@ export default function Container({ children }: { children: ReactNode }) {
       <Sidebar />
       <Topbar />
 
-      <div className="flex flex-col w-full pt-10 xl:pt-20">
+      <div className="flex flex-col w-full pt-5 xl:pt-20">
         {children}
       </div>
     </div>

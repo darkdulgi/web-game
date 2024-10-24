@@ -23,22 +23,20 @@ export default function NextBlockAndScore({
   }
 
   return (
-    <div className="flex flex-col border-4 border-cyan-400 border-l-0 bg-cyan-400 w-48 h-fit">
-      <span className="font-bold text-center">NEXT</span>
+    <div className="flex flex-col border-2 xl:border-4 border-cyan-400 border-l-0 xl:border-l-0 bg-cyan-400 h-fit">
+      <span className="text-xs xl:text-base font-bold text-center">NEXT</span>
 
-      <div className="bg-black w-full min-h-[450px] flex flex-col gap-2 py-2">
+      <div className="bg-black flex flex-col justify-center items-center gap-4 xl:gap-6 h-64 xl:h-[380px] w-20 xl:w-40">
         {nextBlockList
           .filter((_, idx) => idx < 5)
           .map((block, idx) => (
-            <div key={idx} className="h-20 flex items-center justify-center">
-              <img src={imgSrc(block)} />
-            </div>
+            <img key={idx} src={imgSrc(block)} className="h-8 xl:h-12" />
           ))}
       </div>
 
-      <span className="font-bold text-center">SCORE</span>
+      <span className="text-xs xl:text-base font-bold text-center">SCORE</span>
 
-      <div className="bg-black w-full h-full p-3">
+      <div className="bg-black p-1 xl:p-3">
         <span className="text-yellow-300">{score}</span>
       </div>
     </div>
