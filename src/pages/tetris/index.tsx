@@ -21,6 +21,7 @@ export default function TetrisPage() {
         <link rel="preload" href="/tetris/red_O.png" as="image" />
         <link rel="preload" href="/tetris/yellow_block.png" as="image" />
         <link rel="preload" href="/tetris/yellow_S.png" as="image" />
+        <link rel="preload" href="/tetris/bradinsky.mp3" as="audio" />
       </Helmet>
       <Container>
         <Tetris />
