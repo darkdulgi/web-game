@@ -19,7 +19,13 @@ export default function explode(
 
   // 점수를 계산하고 사운드 이펙트를 재생합니다.
   if (fullLines > 0 && lineClearAudioRef.current) {
-    setScore((x) => x + fullLines);
+    setScore((x) => {
+      if (fullLines === 1) x += 40;
+      else if (fullLines === 2) x += 100;
+      else if (fullLines === 3) x += 300;
+      else if (fullLines === 4) x += 1200;
+      return x;
+    });
     lineClearAudioRef.current.currentTime = 0;
     lineClearAudioRef.current.play().catch((e) => console.log(e));
   }
