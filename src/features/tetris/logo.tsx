@@ -1,6 +1,9 @@
 export default function Logo() {
   return (
-    <div className="flex text-4xl xl:text-7xl font-bold">
+    <div
+      onClick={() => window.location.reload()}
+      className="z-20 flex text-4xl xl:text-7xl font-bold cursor-pointer"
+    >
       <span className="text-red-500">T</span>
       <span className="text-orange-500">E</span>
       <span className="text-yellow-400">T</span>
