@@ -1,5 +1,6 @@
 import { MouseEvent, MutableRefObject } from "react";
-import { NOT_START, ON_GOING, TETRIS_BOX } from "../../common/constants";
+import { TETRIS_BOX } from "../../common/constants";
+import StartAndRetryButton from "./startAndRetryButton";
 
 interface FieldType {
   field: number[][];
@@ -77,13 +78,7 @@ export default function Field({
         {countdown}
       </span>
 
-      <button
-        disabled={countdown > 0}
-        onMouseDown={handleMouseDown}
-        className={`${(countdown > 0 || gameState === ON_GOING) && "hidden"} z-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black border-4 border-red-600 p-3 xl:p-5 text-3xl xl:text-5xl font-bold text-red-600`}
-      >
-        {gameState === NOT_START ? "START" : "RETRY"}
-      </button>
+      <StartAndRetryButton countdown={countdown} gameState={gameState} handleMouseDown={handleMouseDown}/>
     </div>
   );
 }

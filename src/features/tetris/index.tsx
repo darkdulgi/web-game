@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { GAME_OVER, NOT_START, ON_GOING } from "../../common/constants";
+import { NOT_START, ON_GOING } from "../../common/constants";
 import Game from "./game";
 import Logo from "./logo";
 import MobilePad from "./mobilePad";
@@ -60,9 +60,6 @@ export default function Tetris() {
         countdown={countdown}
         handleMouseDown={handleMouseDown}
       />
-      <span className="mt-3 text-red-600 text-xl xl:text-3xl font-bold">
-        {gameState === GAME_OVER && "Game Over"}
-      </span>
 
       <MobilePad gameState={gameState} />
     </section>
