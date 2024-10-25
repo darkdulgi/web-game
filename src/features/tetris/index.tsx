@@ -18,16 +18,23 @@ export default function Tetris() {
   }, [countdown]);
 
   useEffect(() => {
-    if (!bgmRef.current) return;
+    const bgm = bgmRef.current;
+    if (!bgm) return;
+
     if (gameState === ON_GOING) {
-      bgmRef.current.play().catch((e) => console.log(e));
+      bgm.play().catch((e) => console.log(e));
     }
 
+    const handleEnded = () => {
+      bgm.currentTime = 0;
+      bgm.play().catch((e) => console.log(e));
+    };
+    bgm.addEventListener("ended", handleEnded);
+
     return () => {
-      if (bgmRef.current) {
-        bgmRef.current.pause();
-        bgmRef.current.currentTime = 0;
-      }
+      bgm.removeEventListener("ended", handleEnded);
+      bgm.pause();
+      bgm.currentTime = 0;
     };
   }, [gameState]);
 
