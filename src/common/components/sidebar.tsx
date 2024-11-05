@@ -8,6 +8,7 @@ export default function Sidebar() {
       </Link>
       <Link to="/minesweeper">지뢰찾기</Link>
       <Link to="/tetris">테트리스</Link>
+      <Link to="/snake">뱀 게임</Link>
     </nav>
   );
 }
