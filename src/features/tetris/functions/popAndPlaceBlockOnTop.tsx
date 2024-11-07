@@ -1,4 +1,4 @@
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI } from "../../../common/constants";
 import placeBlock from "./placeBlock";
 import expectFallingBlock from "./expectFallingBlock";
 import { AllSetStateType } from "../game";
@@ -35,8 +35,8 @@ export default function popAndPlaceBlockOnTop(
 
   // 이미 뺀 맨 앞 블록을 필드 맨 위에 배치합니다.
   const newField = field.map((arr) => [...arr]);
-  for (let i = 0; i < TETRIS_ROW; i++) {
-    for (let j = 0; j < TETRIS_COL; j++) {
+  for (let i = 0; i < TETRIS_HEI; i++) {
+    for (let j = 0; j < TETRIS_WID; j++) {
       if (newField[i][j] === TETRIS_BOX.FALLING) {
         newField[i][j] = TETRIS_BOX.EMPTY;
       }

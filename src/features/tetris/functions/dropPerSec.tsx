@@ -1,5 +1,5 @@
 import moveFallingBlock from "./moveFallingBlock";
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI } from "../../../common/constants";
 import explode from "./explode";
 import isGameOver from "./isGameOver";
 import { AllSetStateType } from "../game";
@@ -25,8 +25,8 @@ export default function dropPerSec({
     // 떨어지는 블록을 아래로 한 칸 내립니다.
     if (moveFallingBlock(newField, 1, 0) === false) {
       // 내릴 공간이 없을 때, 떨어지는 블록을 고정 블록으로 전환합니다.
-      for (let i = 0; i < TETRIS_ROW; i++) {
-        for (let j = 0; j < TETRIS_COL; j++) {
+      for (let i = 0; i < TETRIS_HEI; i++) {
+        for (let j = 0; j < TETRIS_WID; j++) {
           if (newField[i][j] === TETRIS_BOX.FALLING) {
             newField[i][j] = fallingBlock.current[0];
           }

@@ -1,5 +1,5 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI } from "../../../common/constants";
 
 export default function explode(
   field: number[][],
@@ -8,10 +8,10 @@ export default function explode(
 ) {
   let fullLines: number = 0;
   // 꽉 찬 행이 있으면 그 행을 비우고 점수를 올립니다.
-  for (let i = 4; i < TETRIS_ROW; i++) {
+  for (let i = 4; i < TETRIS_HEI; i++) {
     if (field[i].every((value) => value >= 0 && value !== TETRIS_BOX.FALLING)) {
       fullLines++;
-      for (let j = 0; j < TETRIS_COL; j++) {
+      for (let j = 0; j < TETRIS_WID; j++) {
         field[i][j] = TETRIS_BOX.EMPTY;
       }
     }
@@ -31,11 +31,11 @@ export default function explode(
   }
 
   // 빈 행이 있으면 위쪽의 행들을 아래로 내립니다.
-  for (let i = TETRIS_ROW - 2; i >= 0; i--) {
-    for (let ii = i + 1; ii < TETRIS_ROW; ii++) {
+  for (let i = TETRIS_HEI - 2; i >= 0; i--) {
+    for (let ii = i + 1; ii < TETRIS_HEI; ii++) {
       const isEmpty = field[ii].every((value) => value < 0);
       if (isEmpty) {
-        for (let j = 0; j < TETRIS_COL; j++) {
+        for (let j = 0; j < TETRIS_WID; j++) {
           [field[ii][j], field[ii - 1][j]] = [field[ii - 1][j], field[ii][j]];
         }
       } else break;

@@ -1,4 +1,4 @@
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI } from "../../../common/constants";
 import { AllSetStateType } from "../game";
 
 export default function initialize({
@@ -16,9 +16,9 @@ export default function initialize({
   setHolding([-1, 1]);
   setNextBlockList([]);
   setField(
-    Array<number>(TETRIS_ROW)
+    Array<number>(TETRIS_HEI)
       .fill(TETRIS_BOX.EMPTY)
-      .map(() => Array<number>(TETRIS_COL).fill(TETRIS_BOX.EMPTY)),
+      .map(() => Array<number>(TETRIS_WID).fill(TETRIS_BOX.EMPTY)),
   );
   if (lineClearAudioRef.current) {
     lineClearAudioRef.current.volume = 0.3;

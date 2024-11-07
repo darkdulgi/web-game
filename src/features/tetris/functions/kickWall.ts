@@ -1,4 +1,4 @@
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW, TETROMINO } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI, TETROMINO } from "../../../common/constants";
 import { wallKickData, wallKickData_INDIA } from "./wallKickData";
 
 /**
@@ -46,9 +46,9 @@ export default function kickWall(
       const y = block_y + text_x;
       if (
         x < 0 ||
-        x >= TETRIS_ROW ||
+        x >= TETRIS_HEI ||
         y < 0 ||
-        y >= TETRIS_COL ||
+        y >= TETRIS_WID ||
         (field[x][y] >= 0 && field[x][y] !== TETRIS_BOX.FALLING)
       ) {
         isFailed = true;

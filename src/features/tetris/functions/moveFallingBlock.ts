@@ -1,4 +1,4 @@
-import { TETRIS_BOX, TETRIS_COL, TETRIS_ROW } from "../../../common/constants";
+import { TETRIS_BOX, TETRIS_WID, TETRIS_HEI } from "../../../common/constants";
 
 /**
  * 테트리스에서 떨어지는 블록을 움직입니다.
@@ -25,9 +25,9 @@ export default function moveFallingBlock(field: number[][], dx: number, dy: numb
     const ypos = y + dy;
     if (
       xpos < 0 ||
-      xpos >= TETRIS_ROW ||
+      xpos >= TETRIS_HEI ||
       ypos < 0 ||
-      ypos >= TETRIS_COL ||
+      ypos >= TETRIS_WID ||
       (field[xpos][ypos] !== TETRIS_BOX.FALLING && field[xpos][ypos] >= 0)
     ) {
       isPossible = false;

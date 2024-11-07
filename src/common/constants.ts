@@ -41,8 +41,8 @@ export const TETRIS_BOX = {
 };
 
 // 테트리스의 가로, 세로 길이입니다.
-export const TETRIS_ROW = 24;
-export const TETRIS_COL = 10;
+export const TETRIS_HEI = 24;
+export const TETRIS_WID = 10;
 
 // 테트리스에서 한번에 떨어질 수 있는 블록 뭉탱이의 분류입니다.
 export const TETROMINO = {
@@ -54,3 +54,7 @@ export const TETROMINO = {
   SIERRA: 6,
   ZULU: 7,
 };
+
+// 뱀 게임의 가로, 세로 길이입니다.
+export const SNAKE_HEI = 12;
+export const SNAKE_WID = 12;
