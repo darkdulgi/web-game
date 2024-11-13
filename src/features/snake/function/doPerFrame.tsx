@@ -1,6 +1,7 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { PlayerStatusType } from "../game";
-import { GAME_OVER, SNAKE_HEI, SNAKE_WID } from "../../../common/constants";
+import { GAME_OVER, SNAKE_APPLE, SNAKE_HEI, SNAKE_WID } from "../../../common/constants";
+import generateRandomApple from "./generateRandomApple";
 
 export default function doPerFrame(
   score: number,
@@ -18,21 +19,26 @@ export default function doPerFrame(
   const newY = player.current.ypos + dy[player.current.direction];
 
   // 게임 오버 조건을 정의합니다.
-  if (newX < 0 || newX >= SNAKE_HEI || newY < 0 || newY >= SNAKE_WID) {
+  if (newX < 0 || newX >= SNAKE_HEI || newY < 0 || newY >= SNAKE_WID || newField[newX][newY] > 0) {
     setGameState(GAME_OVER);
     return;
   }
 
-  // 게임 오버가 되지 않을 시 다음 동작을 정의합니다.
-  for (let x = 0; x < SNAKE_HEI; x++) {
-    for (let y = 0; y < SNAKE_WID; y++) {
-      if (newField[x][y] > 0) {
-        newField[x][y]--;
+  // 사과를 먹을 때와 아닐 시 동작을 정의합니다.
+  if (newField[newX][newY] === SNAKE_APPLE) {
+    setScore((x) => x + 1);
+    newField[newX][newY] = score + 2;
+  } else {
+    for (let x = 0; x < SNAKE_HEI; x++) {
+      for (let y = 0; y < SNAKE_WID; y++) {
+        if (newField[x][y] > 0) {
+          newField[x][y]--;
+        }
       }
     }
+    newField[newX][newY] = score + 1;
   }
-
-  newField[newX][newY] = score + 1;
+  generateRandomApple(newField);
   player.current.xpos = newX;
   player.current.ypos = newY;
   setField(newField);

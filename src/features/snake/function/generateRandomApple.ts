@@ -6,6 +6,8 @@ export default function generateRandomApple(field: number[][]) {
     for (let j = 0; j < SNAKE_WID; j++) {
       if (field[i][j] === 0) {
         emptyBox.push([i, j]);
+      } else if (field[i][j] === SNAKE_APPLE) {
+        return;
       }
     }
   }
