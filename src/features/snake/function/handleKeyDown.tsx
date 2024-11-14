@@ -6,13 +6,13 @@ export default function handleKeyDown(
   e: KeyboardEvent,
   player: MutableRefObject<PlayerStatusType>,
 ) {
-  if (e.key === KEY_UP) {
+  if (e.key === KEY_UP && player.current.direction != 2) {
     player.current.direction = 0;
-  } else if (e.key === KEY_RIGHT) {
+  } else if (e.key === KEY_RIGHT && player.current.direction != 3) {
     player.current.direction = 1;
-  } else if (e.key === KEY_DOWN) {
+  } else if (e.key === KEY_DOWN && player.current.direction != 0) {
     player.current.direction = 2;
-  } else if (e.key === KEY_LEFT) {
+  } else if (e.key === KEY_LEFT && player.current.direction != 1) {
     player.current.direction = 3;
   }
 }
