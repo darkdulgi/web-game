@@ -13,5 +13,5 @@ export default function initialize(
       .map(() => Array<number>(SNAKE_WID).fill(0)),
   );
   setScore(0);
-  player.current = { xpos: SNAKE_HEI / 2, ypos: SNAKE_WID / 2, direction: 1 };
+  player.current = { xpos: SNAKE_HEI / 2, ypos: SNAKE_WID / 2, direction: 1, inputQueue: [] };
 }

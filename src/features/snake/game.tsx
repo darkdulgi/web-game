@@ -14,13 +14,14 @@ export interface PlayerStatusType {
   xpos: number;
   ypos: number;
   direction: number;
+  inputQueue: number[];
 }
 
 export default function Game({ gameState, setGameState }: GameType) {
   const [score, setScore] = useState<number>(0);
   const [field, setField] = useState<number[][]>([]);
   const [frame, setFrame] = useState<number>(0);
-  const player = useRef<PlayerStatusType>({ xpos: 0, ypos: 0, direction: 0 });
+  const player = useRef<PlayerStatusType>({ xpos: 0, ypos: 0, direction: 0, inputQueue: [] });
 
   useEffect(() => {
     function _handleKeyDown(e: KeyboardEvent) {
@@ -47,7 +48,7 @@ export default function Game({ gameState, setGameState }: GameType) {
 
     setTimeout(() => {
       setFrame((x) => x + 1);
-    }, 500);
+    }, 100);
   }, [frame]);
 
   return <Field field={field} score={score} />;

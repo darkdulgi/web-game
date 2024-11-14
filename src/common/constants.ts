@@ -57,5 +57,5 @@ export const TETROMINO = {
 
 // 뱀 게임의 가로, 세로 길이, 사과 상수입니다.
 export const SNAKE_HEI = 12;
-export const SNAKE_WID = 12;
+export const SNAKE_WID = 20;
 export const SNAKE_APPLE = -1;
